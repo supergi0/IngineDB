@@ -1,1 +1,1 @@
-SELECT * Fom Aswer;
+SELECT * From Answer;
