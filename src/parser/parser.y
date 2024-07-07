@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lex.yy.c"
+#include "errors.c"
 
 void yyerror(const char *s);
 int yylex();
@@ -130,9 +131,4 @@ int main() {
     yyparse();
     printf("SQL parsing completed successfully.\n");
     return 0;
-}
-
-void yyerror(const char *s) {
-    fprintf(stderr, "Parse error: %s\n", s);
-    exit(1);
 }
