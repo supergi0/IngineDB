@@ -17,18 +17,16 @@ int yywrap();
 }
 
 %token <nd_obj> SELECT FROM WHERE INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE DROP
-%token <nd_obj> LPAREN RPAREN COMMA SEMICOLON ASTERISK
+%token <nd_obj> INT_TYPE VARCHAR_TYPE BOOLEAN_TYPE FLOAT_TYPE CHAR_TYPE DATE_TYPE TIMESTAMP_TYPE
+%token <nd_obj> INT_VAL VARCHAR_VAL TRUE_VAL FALSE_VAL FLOAT_VAL CHAR_VAL DATE_VAL TIMESTAMP_VAL NULL_VAL
+%token <nd_obj> IDENTIFIER LPAREN RPAREN COMMA SEMICOLON ASTERISK
 %token <nd_obj> EQ LT GT LE GE NE
-%token <nd_obj> INTEGER FLOAT IDENTIFIER STRING
+%token <nd_obj> AND OR
 
-%start sql_queries
+
+%start sql_query
 
 %%
-
-sql_queries
-    : sql_query
-    | sql_queries sql_query
-    ;
 
 sql_query
     : select_statement
@@ -55,16 +53,25 @@ column_list
 
 table_list
     : IDENTIFIER
-    | table_list COMMA IDENTIFIER
     ;
 
 where_clause
     : /* empty */
-    | WHERE condition
+    | WHERE or_condition
     ;
 
-condition
+or_condition
+    : and_condition
+    | or_condition OR and_condition
+    ;
+
+and_condition
+    : basic_condition
+    | and_condition AND basic_condition
+
+basic_condition
     : IDENTIFIER comparison_operator expression
+    | LPAREN or_condition RPAREN
     ;
 
 comparison_operator
@@ -73,9 +80,15 @@ comparison_operator
 
 expression
     : IDENTIFIER
-    | INTEGER
-    | FLOAT
-    | STRING
+    | INT_VAL
+    | FLOAT_VAL
+    | VARCHAR_VAL
+    | CHAR_VAL
+    | DATE_VAL
+    | TIMESTAMP_VAL
+    | TRUE_VAL
+    | FALSE_VAL
+    | NULL_VAL
     ;
 
 insert_statement
@@ -114,9 +127,13 @@ column_definition
     ;
 
 data_type
-    : INTEGER
-    | FLOAT
-    | STRING
+    : INT_TYPE
+    | VARCHAR_TYPE
+    | BOOLEAN_TYPE
+    | FLOAT_TYPE
+    | CHAR_TYPE
+    | DATE_TYPE
+    | TIMESTAMP_TYPE
     ;
 
 drop_table_statement

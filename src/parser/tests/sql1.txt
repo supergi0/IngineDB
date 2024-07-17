@@ -1,1 +1,1 @@
-SELECT * From Answer;
+updatE hellowold set val=3 where a<>b and d=b;

@@ -6,6 +6,6 @@ extern char *yytext;
 
 // Print parsing error
 void yyerror(const char *s) {
-    fprintf(stderr, "Parse error: Occurred at token %s\n", yytext);
+    fprintf(stderr, "Parse error: occurred at token \"%s\"\n", yytext);
     exit(1);
 }
