@@ -1,1 +1,1 @@
-updatE hellowold set val=3 whee a<>b and d=b;
+updatE hellowold set val=3 where a<>b and d=b;

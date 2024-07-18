@@ -168,7 +168,10 @@ table_list
     ;
 
 where_clause
-    : /* empty */
+    : 
+    {
+        
+    }
     | WHERE or_condition
     {
         $$.nd = mknode("where_clause");
@@ -331,7 +334,7 @@ expression
         $1.nd = mknode("FLOAT_VAL");
         $1.nd->children[0] = mknode($1.name);
         
-        $$.nd->children[0] = $1.md;
+        $$.nd->children[0] = $1.nd;
     }
     | VARCHAR_VAL
     {
@@ -713,5 +716,8 @@ drop_table_statement
 int main() {
     yyparse();
     printf("SQL parsing completed successfully.\n");
+
+    // comment this after testing parse tree generation
+    printtree(head);
     return 0;
 }
