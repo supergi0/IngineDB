@@ -1,4 +1,4 @@
-// Helper functions for generating the parse tree via parser.y
+// Interface to get the parse tree anywhere
 
 #ifndef PARSER_H
 #define PARSER_H

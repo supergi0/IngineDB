@@ -1,9 +1,7 @@
 %{
-#include "../include/basic.h"
-#include "../include/parser/parser.h"
 #include "./helper.c"
 #include "lex.yy.c"
-#include "errors.c"
+#include "./errors.c"
 
 void yyerror(const char *s);
 int yylex();
