@@ -10,4 +10,6 @@ typedef struct node {
     char* token;
 } node;
 
+void printtree(node* head);
+
 #endif

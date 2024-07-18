@@ -9,7 +9,7 @@ void yyerror(const char *s);
 int yylex();
 int yywrap();
 
-node* head;
+node* head = NULL;
 
 %}
 
@@ -713,11 +713,18 @@ drop_table_statement
 
 %%
 
-int main() {
+/* int main() {
     yyparse();
     printf("SQL parsing completed successfully.\n");
 
     // comment this after testing parse tree generation
     printtree(head);
     return 0;
+} */
+
+node* parse_and_get_tree(const char* input) {
+    YY_BUFFER_STATE bufferState = yy_scan_string(input);
+    yyparse();
+    yy_delete_buffer(bufferState);
+    return head;
 }
