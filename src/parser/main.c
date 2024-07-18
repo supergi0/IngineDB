@@ -4,15 +4,36 @@
 extern node* parse_and_get_tree(const char* input);
 
 int main() {
-    const char* input = "SELECT * from hello;"; // Replace this with your SQL query
+    FILE *file;
+    char *input;
+
+    // Open the file in read mode
+    file = fopen("sql1.txt", "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return EXIT_FAILURE;
+    }
+
+    input = (char *)malloc(10000 * sizeof(char));
+    if (input == NULL) {
+        perror("Error allocating memory");
+        fclose(file);
+        return EXIT_FAILURE;
+    }
+
+    if (fgets(input,10000, file) == NULL) {
+        perror("Error reading file");
+    }
+
     node* tree = parse_and_get_tree(input);
 
     if (tree != NULL) {
-        // If needed, call a function to print or process the tree
-        printtree(tree); // Assuming you have a function to print the tree
+        printtree(tree);
+        printf("Parsing complete.\n");
     } else {
         printf("Parsing failed.\n");
     }
 
+    free(input);
     return 0;
 }

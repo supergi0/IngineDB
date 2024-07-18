@@ -1,1 +1,0 @@
-{sql_query{select_statement{SELECT{SELECT}}{select_list{ASTERISK{*}}}{FROM{from}}{table_list{IDENTIFIER{hello}}}{SEMICOLON{;}}}}

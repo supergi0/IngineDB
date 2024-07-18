@@ -5,49 +5,46 @@ cd ..
 BASE_DIR=$(pwd)
 
 # Compile the lexer and parser
-flex lexer.l
-bison -d --yacc parser.y
-cc y.tab.c -o parser_executable
+flex lexer.l && bison -d --yacc parser.y && cc -c y.tab.c -o parser.o && cc -c main.c -o main.o && cc main.o parser.o -o executethis
 
-# Cleanup lex and parser files
-rm lex.yy.c
-rm y.tab.c
-rm y.tab.h
+# Cleanup lex, parser files, and object files
+rm lex.yy.c y.tab.c y.tab.h parser.o main.o
 
-# Check if parser_executable was successfully created before proceeding
-if [ ! -f parser_executable ]; then
-    echo "Compilation failed, parser_executable not found."
+# Check if executethis was successfully created before proceeding
+if [ ! -f executethis ]; then
+    echo "Compilation failed, executethis not found."
     exit 1
 fi
 
 # Iterate over each directory in $BASE_DIR/tests/
 find $BASE_DIR/tests -mindepth 1 -maxdepth 1 -type d | while read dir; do
-    # Make a copy of parser_executable for each directory
-    cp parser_executable "${dir}/parser_executable_copy"
+    # Make a copy of executethis for each directory
+    cp executethis "${dir}/executethis_copy"
     if [ -f "${dir}/sql1.txt" ]; then
         # Move the copy into the directory
-        mv "${dir}/parser_executable_copy" "${dir}/parser_executable"
+        mv "${dir}/executethis_copy" "${dir}/executethis"
         # Change directory to $dir
         cd "$dir"
         # Execute it
-        OUTPUT=$(./parser_executable < "sql1.txt")
+        OUTPUT=$(./executethis)
         echo "$OUTPUT"
 
         # get parse tree
         cp ../tree.py ./
         python3 tree.py
         rm tree.py
+        rm output.ps
          
         # Change back to the base directory
         cd $BASE_DIR
         # Remove the executable from the directory after use
-        rm "${dir}/parser_executable"
+        rm "${dir}/executethis"
     else
         echo "sql1.txt not found in $dir"
         # Remove the unused copy if sql1.txt is not found
-        rm "${dir}/parser_executable_copy"
+        rm "${dir}/executethis_copy"
     fi
 done
 
-# Remove the original parser_executable
-rm parser_executable
+# Remove the original executethis
+rm executethis
