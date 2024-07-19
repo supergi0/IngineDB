@@ -1,6 +1,6 @@
 #include "../include/parser/parser.h"
 
-extern node* parse_and_get_tree(const char* input);
+extern node* getParseTree(const char* input);
 
 int main() {
     FILE *file;
@@ -24,10 +24,10 @@ int main() {
         perror("Error reading file");
     }
 
-    node* tree = parse_and_get_tree(input);
+    node* parsetree_head = getParseTree(input);
 
-    if (tree != NULL) {
-        printtree(tree);
+    if (parsetree_head != NULL) {
+        printtree(parsetree_head);
         printf("Parsing complete.\n");
     } else {
         printf("Parsing failed.\n");

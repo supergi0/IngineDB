@@ -711,7 +711,7 @@ drop_table_statement
 
 %%
 
-node* parse_and_get_tree(const char* input) {
+node* getParseTree(const char* input) {
     YY_BUFFER_STATE bufferState = yy_scan_string(input);
     yyparse();
     yy_delete_buffer(bufferState);

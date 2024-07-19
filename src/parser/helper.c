@@ -1,5 +1,6 @@
 #include "../include/parser/parser.h"
 
+// make a new parse tree node
 node* mknode(char* token){
     node *newnode  = (node*)malloc(sizeof(struct node));
     if (newnode == NULL) {
