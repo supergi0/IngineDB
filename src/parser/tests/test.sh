@@ -29,11 +29,11 @@ find $BASE_DIR/tests -mindepth 1 -maxdepth 1 -type d | while read dir; do
         OUTPUT=$(./executethis)
         echo "$OUTPUT"
 
-        # get parse tree
-        cp ../tree.py ./
-        python3 tree.py
-        rm tree.py
-        rm output.ps
+        # # get parse tree
+        # cp ../tree.py ./
+        # python3 tree.py
+        # rm tree.py
+        # rm output.ps
          
         # Change back to the base directory
         cd $BASE_DIR
