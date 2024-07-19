@@ -12,4 +12,6 @@ typedef struct node {
 
 void printtree(node* head);
 
+node* getParseTree(const char* input);
+
 #endif

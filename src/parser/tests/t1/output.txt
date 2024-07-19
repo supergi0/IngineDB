@@ -1,0 +1,1 @@
+{sql_query{select_statement{SELECT{select}}{select_list{ASTERISK{*}}}{FROM{from}}{table_list{IDENTIFIER{helloworld}}}{where_clause{WHERE{where}}{or_condition{and_condition{basic_condition{IDENTIFIER{a}}{comparison_operator{EQ{=}}}{expression{INT_VAL{8}}}}}}}{SEMICOLON{;}}}}
