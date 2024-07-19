@@ -32,7 +32,7 @@ void recursiveprinttree(node* head, int n, int depth, int child){
 	}
 	fprintf(output,"}");
 }
-void printtree(node* head){
+void printTree(node* head){
     output = fopen("output.txt","w+");
     recursiveprinttree(head,1,0,0);
     fclose(output);

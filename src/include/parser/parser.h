@@ -10,8 +10,10 @@ typedef struct node {
     char* token;
 } node;
 
-void printtree(node* head);
+void printTree(node* head);
 
 node* getParseTree(const char* input);
+
+int parseInput(char* input);
 
 #endif
