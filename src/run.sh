@@ -17,7 +17,7 @@ cc main.o parser.o parser_impl.o -o executethis # Link main.o, parser.o, and par
 if [ $? -eq 0 ]; then
     ./executethis
     # Clean up
-    rm parser.o main.o executethis parser_impl.o
+    rm parser.o main.o executethis parser_impl.o output.txt
 else
     echo "Compilation or linking failed."
 fi
