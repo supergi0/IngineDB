@@ -16,39 +16,45 @@ typedef union {
     int int_value;
     float float_value;
     char char_value;
-    char* varchar_value;
+    char *varchar_value;
 } DataValue;
 
-// A basic cell consisting of only the value and flag for null values
-// Type checking we can do by mapping the cells array with the column array
 // Size would be 8 bytes Datavalue + 1 byte boolean i.e. 9 bytes per cell
 typedef struct {
     DataValue value;
-    bool is_null; // to mark a cell has null value
+    bool is_null;
 } Cell;
 
-// Array for cells defining a single row
 typedef struct {
-    Cell* cells;
+    Cell **cell_array; // array of Cell pointers
 } Row;
 
-// This will hold the datatype for the entire column
 typedef struct {
-    char* column_name;
+    char *column_name;
     enum DataType type;
 } Column;
 
 typedef struct {
     char *name;
-    Column *columns; // Pointer to column structs
-    Row* rows; // Pointer to row structs
+    Column **column_array; // Array of pointers to Columns
+    Row **row_array; // Array of pointers to Rows
     int column_count;
     int row_count;
 } Table;
 
 typedef struct {
-    Table* tables; // Pointer to table structs
+    char *name;
+    Table **table_array; // Array of pointer to tables
     int table_count;
 } Database;
+
+// This will be used globally and will store all the databases as well as the current database
+typedef struct {
+    Database **database_array; // Array of pointer to Databases
+    Database *current_database; // Pointer to current Database
+    int database_count;
+} DatabaseManager;
+
+extern DatabaseManager database_manager;
 
 #endif

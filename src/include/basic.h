@@ -9,4 +9,13 @@
 #include <string.h>
 #include <stdbool.h>
 
+bool checkMemoryAvailable(void* pointer){
+    if(pointer == NULL){
+        fprintf(stderr,"Error: Memory not allocated");
+        return false;
+    }
+
+    return true;
+}
+
 #endif 
