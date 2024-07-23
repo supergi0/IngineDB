@@ -11,7 +11,7 @@ enum DataType {
     VARCHAR
 };
 
-// To define a collective type of data allowed in a cell
+// To define a collective type of data allowed in a cell, size occupied would be the maximum of all i.e. char* ptr 8 bytes
 typedef union {
     int int_value;
     float float_value;
@@ -21,6 +21,7 @@ typedef union {
 
 // A basic cell consisting of only the value and flag for null values
 // Type checking we can do by mapping the cells array with the column array
+// Size would be 8 bytes Datavalue + 1 byte boolean i.e. 9 bytes per cell
 typedef struct {
     DataValue value;
     bool is_null; // to mark a cell has null value
@@ -50,4 +51,4 @@ typedef struct {
     int table_count;
 } Database;
 
-#endif 
+#endif

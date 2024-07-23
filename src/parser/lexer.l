@@ -25,6 +25,8 @@ DELETE { strcpy(yylval.nd_obj.name,(yytext)); return DELETE; }
 CREATE { strcpy(yylval.nd_obj.name,(yytext)); return CREATE; }
 TABLE { strcpy(yylval.nd_obj.name,(yytext)); return TABLE; }
 DROP { strcpy(yylval.nd_obj.name,(yytext)); return DROP; }
+DATABASE { strcpy(yylval.nd_obj.name,(yytext)); return DATABASE; }
+USE { strcpy(yylval.nd_obj.name,(yytext)); return USE; }
 
 INT { strcpy(yylval.nd_obj.name,(yytext)); return INT_TYPE; }
 VARCHAR { strcpy(yylval.nd_obj.name,(yytext)); return VARCHAR_TYPE; }
