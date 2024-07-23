@@ -18,15 +18,15 @@ node* head = NULL;
     } nd_obj;
 }
 
-%token <nd_obj> SELECT FROM WHERE INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE DROP DATABASE USE
+%token <nd_obj> SELECT FROM WHERE INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE DROP DATABASE USE SHOW TABLES DATABASES
 %token <nd_obj> INT_TYPE VARCHAR_TYPE BOOLEAN_TYPE FLOAT_TYPE CHAR_TYPE DATE_TYPE TIMESTAMP_TYPE
 %token <nd_obj> INT_VAL VARCHAR_VAL TRUE_VAL FALSE_VAL FLOAT_VAL CHAR_VAL DATE_VAL TIMESTAMP_VAL NULL_VAL
 %token <nd_obj> IDENTIFIER LPAREN RPAREN COMMA SEMICOLON ASTERISK
 %token <nd_obj> EQ LT GT LE GE NE
 %token <nd_obj> AND OR
 
-%type<nd_obj> sql_query select_statement insert_statement update_statement delete_statement create_table_statement drop_table_statement
-%type<nd_obj> create_database_statement use_database_statement drop_database_statement
+%type<nd_obj> sql_query select_statement insert_statement update_statement delete_statement create_table_statement drop_table_statement show_table_statement
+%type<nd_obj> create_database_statement use_database_statement drop_database_statement show_database_statement
 %type<nd_obj> select_list table_list column_list value_list update_list column_definitions column_definition
 %type<nd_obj> where_clause
 %type<nd_obj> or_condition and_condition basic_condition comparison_operator expression data_type
@@ -85,6 +85,12 @@ sql_query
 
         head = $$.nd;
     }
+    | show_table_statement
+    {
+        $$.nd = mknode("sql_query");
+        $$.nd->children[0] = $1.nd;
+        head = $$.nd;
+    }
     | create_database_statement
     {
         $$.nd = mknode("sql_query");
@@ -98,6 +104,12 @@ sql_query
         head = $$.nd;
     }
     | drop_database_statement
+    {
+        $$.nd = mknode("sql_query");
+        $$.nd->children[0] = $1.nd;
+        head = $$.nd;
+    }
+    | show_database_statement
     {
         $$.nd = mknode("sql_query");
         $$.nd->children[0] = $1.nd;
@@ -728,18 +740,63 @@ drop_table_statement
     }
     ;
 
+show_table_statement
+    : SHOW TABLES SEMICOLON
+    {
+        $$.nd = mknode("show_table_statement");
+
+        $1.nd = mknode("SHOW");
+        $1.nd->children[0] = mknode($1.name);
+
+        $2.nd = mknode("TABLES");
+        $2.nd->children[0] = mknode($2.name);
+
+        $3.nd = mknode("SEMICOLON");
+        $3.nd->children[0] = mknode($3.name);
+
+        $$.nd->children[0] = $1.nd;
+        $$.nd->children[1] = $2.nd;
+        $$.nd->children[2] = $3.nd;
+    }
+    ;
+
+show_database_statement
+    : SHOW DATABASES SEMICOLON
+    {
+        $$.nd = mknode("show_table_statement");
+
+        $1.nd = mknode("SHOW");
+        $1.nd->children[0] = mknode($1.name);
+
+        $2.nd = mknode("DATABASES");
+        $2.nd->children[0] = mknode($2.name);
+
+        $3.nd = mknode("SEMICOLON");
+        $3.nd->children[0] = mknode($3.name);
+
+        $$.nd->children[0] = $1.nd;
+        $$.nd->children[1] = $2.nd;
+        $$.nd->children[2] = $3.nd;
+    }
+    ;
+
 create_database_statement
     : CREATE DATABASE IDENTIFIER SEMICOLON
     {
         $$.nd = mknode("create_database_statement");
+
         $1.nd = mknode("CREATE");
         $1.nd->children[0] = mknode($1.name);
+
         $2.nd = mknode("DATABASE");
         $2.nd->children[0] = mknode($2.name);
+
         $3.nd = mknode("IDENTIFIER");
         $3.nd->children[0] = mknode($3.name);
+
         $4.nd = mknode("SEMICOLON");
         $4.nd->children[0] = mknode($4.name);
+
         $$.nd->children[0] = $1.nd;
         $$.nd->children[1] = $2.nd;
         $$.nd->children[2] = $3.nd;
@@ -751,14 +808,19 @@ use_database_statement
     : USE DATABASE IDENTIFIER SEMICOLON
     {
         $$.nd = mknode("use_database_statement");
+
         $1.nd = mknode("USE");
         $1.nd->children[0] = mknode($1.name);
+
         $2.nd = mknode("DATABASE");
         $2.nd->children[0] = mknode($2.name);
+
         $3.nd = mknode("IDENTIFIER");
         $3.nd->children[0] = mknode($3.name);
+
         $4.nd = mknode("SEMICOLON");
         $4.nd->children[0] = mknode($4.name);
+
         $$.nd->children[0] = $1.nd;
         $$.nd->children[1] = $2.nd;
         $$.nd->children[2] = $3.nd;
@@ -770,14 +832,19 @@ drop_database_statement
     : DROP DATABASE IDENTIFIER SEMICOLON
     {
         $$.nd = mknode("drop_database_statement");
+
         $1.nd = mknode("DROP");
         $1.nd->children[0] = mknode($1.name);
+
         $2.nd = mknode("DATABASE");
         $2.nd->children[0] = mknode($2.name);
+
         $3.nd = mknode("IDENTIFIER");
         $3.nd->children[0] = mknode($3.name);
+
         $4.nd = mknode("SEMICOLON");
         $4.nd->children[0] = mknode($4.name);
+
         $$.nd->children[0] = $1.nd;
         $$.nd->children[1] = $2.nd;
         $$.nd->children[2] = $3.nd;

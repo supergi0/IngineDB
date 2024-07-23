@@ -13,6 +13,8 @@ CHAR \'[^\']\'
 
 %%
 
+TABLES { strcpy(yylval.nd_obj.name,(yytext)); return TABLES; }
+DATABASES { strcpy(yylval.nd_obj.name,(yytext)); return DATABASES; }
 SELECT { strcpy(yylval.nd_obj.name,(yytext)); return SELECT; }
 FROM { strcpy(yylval.nd_obj.name,(yytext)); return FROM; }
 WHERE { strcpy(yylval.nd_obj.name,(yytext)); return WHERE; }
@@ -27,6 +29,7 @@ TABLE { strcpy(yylval.nd_obj.name,(yytext)); return TABLE; }
 DROP { strcpy(yylval.nd_obj.name,(yytext)); return DROP; }
 DATABASE { strcpy(yylval.nd_obj.name,(yytext)); return DATABASE; }
 USE { strcpy(yylval.nd_obj.name,(yytext)); return USE; }
+SHOW { strcpy(yylval.nd_obj.name,(yytext)); return SHOW; }
 
 INT { strcpy(yylval.nd_obj.name,(yytext)); return INT_TYPE; }
 VARCHAR { strcpy(yylval.nd_obj.name,(yytext)); return VARCHAR_TYPE; }
