@@ -1,55 +1,59 @@
-#pragma once
-
 #include "./basic.hpp"
-#include <memory>
-#include <vector>
-#include <string>
-#include <variant>
 
-// To identify what each column is storing
-enum class DataType {
+enum class DataType : uint8_t {
     INT,
     FLOAT,
     CHAR,
-    VARCHAR
+    VARCHAR,
+    BOOLEAN
 };
 
-// To define a collective type of data allowed in a cell
-using DataValue = std::variant<int, float, char, std::string>;
+union DataValue {
+    bool bool_value;
+    int int_value;
+    float float_value;
+    char char_value;
+    char* varchar_value;
+};
 
-// Size would be the size of DataValue + 1 byte boolean
-struct Cell {
+class Cell {
+public:
     DataValue value;
-    bool is_null;
 };
 
-struct Row {
-    std::vector<std::unique_ptr<Cell>> cell_array; // array of Cells
+class Row {
+public:
+    std::vector<Cell> cell_array;
+    std::bitset<MAX_COLUMNS> isnull {}; 
 };
 
-struct Column {
-    std::string column_name;
+class Column {
+public:
+    std::string name;
     DataType type;
+
+    explicit Column(std::string n, DataType t) : name(std::move(n)), type(t) {}
 };
 
-struct Table {
+class Table {
+public:
     std::string name;
-    std::vector<std::unique_ptr<Column>> column_array; // Array of Columns
-    std::vector<std::unique_ptr<Row>> row_array; // Array of Rows
-    int column_count;
-    int row_count;
+    std::vector<Column> column_array;
+    std::vector<Row> row_array;
+
+    explicit Table(std::string n) : name(std::move(n)) {}
 };
 
-struct Database {
+class Database {
+public:
     std::string name;
-    std::vector<std::unique_ptr<Table>> table_array; // Array of tables
-    int table_count;
+    std::vector<Table> table_array;
+
+    explicit Database(std::string n) : name(std::move(n)) {}
 };
 
-struct DatabaseManager {
-    std::vector<std::unique_ptr<Database>> database_array; // Array of Databases
-    std::unique_ptr<Database> current_database; // Pointer to current Database
-    int database_count;
+class DatabaseManager {
+public:
+    std::vector<Database> database_array;
+    Database* current_database;
 };
-
-extern DatabaseManager database_manager;

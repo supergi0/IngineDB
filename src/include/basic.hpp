@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <stdexcept>
 #include <cstring>
+#include <bitset>
+
+const size_t MAX_COLUMNS = 128;
 
 #endif 
