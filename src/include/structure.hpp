@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./basic.hpp"
 
 enum class DataType : uint8_t {
@@ -56,4 +58,7 @@ class DatabaseManager {
 public:
     std::vector<Database> database_array;
     Database* current_database;
+    int count;
 };
+
+extern DatabaseManager db_manager;
