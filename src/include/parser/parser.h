@@ -1,5 +1,3 @@
-// Interface to get the parse tree anywhere
-
 #ifndef PARSER_H
 #define PARSER_H
 
@@ -14,6 +12,6 @@ void printTree(node* head);
 
 node* getParseTree(const char* input);
 
-int parseInput(char* input);
+int parseInput(const char* input);
 
 #endif

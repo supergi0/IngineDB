@@ -1,6 +1,6 @@
 #include "../include/parser/parser.h"
 
-int parseInput(char* input) {
+int parseInput(const char* input) {
 
     node* parsetree_head = getParseTree(input);
 
@@ -12,8 +12,4 @@ int parseInput(char* input) {
     }
 
     return 0;
-}
-
-char* getQueryType(node* head){
-
 }

@@ -3,11 +3,12 @@
 #ifndef BASIC_H
 #define BASIC_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdbool.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <memory>
+#include <stdexcept>
+#include <cstring>
 
 bool checkMemoryAvailable(void* pointer);
 #endif 
