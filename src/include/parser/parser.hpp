@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "../basic.h"
+#include "../basic.hpp"
 
 typedef struct node {
     struct node* children[20];

@@ -1,4 +1,4 @@
-#include "../include/parser/parser.h"
+#include "../include/parser/parser.hpp"
 
 // make a new parse tree node
 node* mknode(const char* token){

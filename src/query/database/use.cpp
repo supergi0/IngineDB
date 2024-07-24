@@ -1,5 +1,5 @@
 #include "../../include/query/database/use.h"
-#include "./helper.c"
+#include "./helper.cpp"
 
 bool useDatabase(char* database_name){
     int index = getDatabaseIndex(database_name);

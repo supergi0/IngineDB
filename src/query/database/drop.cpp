@@ -1,5 +1,5 @@
 #include "../../include/query/database/drop.h"
-#include "./helper.c"
+#include "./helper.cpp"
 
 bool dropDatabase(char* database_name) {
     int index = getDatabaseIndex(database_name);

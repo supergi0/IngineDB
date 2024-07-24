@@ -10,5 +10,4 @@
 #include <stdexcept>
 #include <cstring>
 
-bool checkMemoryAvailable(void* pointer);
 #endif 

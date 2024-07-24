@@ -1,5 +1,5 @@
 #include "../../include/query/database/create.h"
-#include "./helper.c"
+#include "./helper.cpp"
 
 bool createDatabase(char* database_name){
     int index = getDatabaseIndex(database_name);

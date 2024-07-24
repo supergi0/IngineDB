@@ -1,7 +1,7 @@
 /*
 This file is for all the errors definitions that can occur while parsing
 */
-#include "../include/basic.h"
+#include "../include/basic.hpp"
 extern char *yytext;
 
 // Print parsing error

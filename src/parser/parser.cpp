@@ -1,4 +1,4 @@
-#include "../include/parser/parser.h"
+#include "../include/parser/parser.hpp"
 
 int parseInput(const char* input) {
 

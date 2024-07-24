@@ -1,5 +1,5 @@
 #include "../../include/query/database/show.h"
-#include "./helper.c"
+#include "./helper.cpp"
 
 char* showDatabase(){
     char** return_array = malloc((database_manager.database_count + 1) * sizeof(char*));
