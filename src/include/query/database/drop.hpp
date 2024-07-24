@@ -1,8 +1,8 @@
 #ifndef DATABASE_DROP_H
 #define DATABASE_DROP_H
 
-#include "../../structure.h"
+#include "../../structure.hpp"
 
-bool dropDatabase(char* database_name);
+bool dropDatabase(const std::string& database_name);
 
 #endif 

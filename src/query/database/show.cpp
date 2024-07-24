@@ -1,15 +1,10 @@
-#include "../../include/query/database/show.h"
+#include "../../include/query/database/show.hpp"
 #include "./helper.cpp"
 
-char* showDatabase(){
-    char** return_array = malloc((database_manager.database_count + 1) * sizeof(char*));
-
-    for(int i = 0; i < database_manager.database_count; i++){
-        return_array[i] = strdup(database_manager.database_array[i]->name);
+std::vector<std::string> showDatabase() {
+    std::vector<std::string> return_array;
+    for (const auto& db : database_manager.database_array) {
+        return_array.push_back(db->name);
     }
-
-    return_array[database_manager.database_count] = NULL;
-
-    // remember to free this memory
     return return_array;
 }

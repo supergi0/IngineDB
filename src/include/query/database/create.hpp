@@ -1,8 +1,5 @@
-#ifndef DATABASE_CREATE_H
-#define DATABASE_CREATE_H
+#pragma once
 
-#include "../../structure.h"
+#include "../../structure.hpp"
 
-bool createDatabase(char* database_name);
-
-#endif 
+bool createDatabase(const std::string &database_name);

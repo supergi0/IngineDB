@@ -1,8 +1,8 @@
 #ifndef DATABASE_SHOW_H
 #define DATABASE_SHOW_H
 
-#include "../../structure.h"
+#include "../../structure.hpp"
 
-char** showDatabase();
+std::vector<std::string> showDatabase()
 
 #endif 

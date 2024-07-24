@@ -1,8 +1,8 @@
 #ifndef DATABASE_USE_H
 #define DATABASE_USE_H
 
-#include "../../structure.h"
+#include "../../structure.hpp"
 
-bool useDatabase(char* database_name);
+bool useDatabase(const std::string& database_name);
 
 #endif 
