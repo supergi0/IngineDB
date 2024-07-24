@@ -25,8 +25,8 @@ public:
 
 class Row {
 public:
-    std::vector<Cell> cell_array;
-    std::bitset<MAX_COLUMNS> isnull {}; 
+    std::unique_ptr<Cell[]> cell_array;
+    std::bitset<MAX_COLUMNS> isnull {};
 };
 
 class Column {

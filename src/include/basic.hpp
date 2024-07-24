@@ -7,4 +7,4 @@
 #include <cstring>
 #include <bitset>
 
-const size_t MAX_COLUMNS = 128;
+const size_t MAX_COLUMNS = 64;
