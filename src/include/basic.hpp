@@ -6,5 +6,9 @@
 #include <memory>
 #include <cstring>
 #include <bitset>
+#include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 
-const size_t MAX_COLUMNS = 64;
+const size_t INIT_COLUMNS = 64;
