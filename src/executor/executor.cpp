@@ -1,9 +1,11 @@
 #include "../include/parser/parser.hpp"
 
-int main() {
-    const char *input = "SELECT * from helloworld;";
+// used const char* here cuz of legacy c parsing logic, dont want to change that as of now
+std::string execute(const char* input) {
+
+    std::string return_val;
 
     parseInput(input);
 
-    return 0;
+    return return_val;
 }

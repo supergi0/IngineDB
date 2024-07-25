@@ -6,5 +6,7 @@ for testing purposes
 
 execute 
 ```bash
-bash run.sh
+make all && make clean
 ```
+
+always exit with `exit` command for graceful termination with all executable and object files erasure

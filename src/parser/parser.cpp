@@ -6,9 +6,9 @@ int parseInput(const char* input) {
 
     if (parsetree_head != NULL) {
         printTree(parsetree_head);
-        printf("Parsing complete.\n");
+        printf("Parsing complete.");
     } else {
-        printf("Parsing failed.\n");
+        printf("Parsing failed.");
     }
 
     return 0;
