@@ -1,39 +1,57 @@
-#run all
-all : parse execute cli executable 
-	./ingdb
+#directories
+SRC := .
+CLI := cli
+EXECUTOR := executor
+PARSER := parser
+
+#These are the object files to be linked!
+CLI_OBJ := $(CLI)/main.o
+EXECUTOR_OBJ := $(EXECUTOR)/executor.o
+PARSER_CPP_OBJ := $(PARSER)/parser_cpp.o
+PARSER_Y_OBJ := $(PARSER)/parser_y.o
+
+#This is the executable file
+INGDB := ingdb
+
+# Run all and clean
+all: run clean
+
+#run
+run : parse execute cli executable
+	./$(INGDB)
 
 #get executable
-executable : ingdb
+executable : $(INGDB)
 
-ingdb : cli/main.o executor/executor.o parser/parser_cpp.o parser/parser_y.o
-	g++ cli/main.o executor/executor.o parser/parser_cpp.o parser/parser_y.o -o ingdb
+$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(PARSER_CPP_OBJ) $(PARSER_Y_OBJ)
+	g++ $^ -o $@
 
 #cli logic
-cli : cli/main.o
+cli: $(CLI_OBJ)
 
-cli/main.o : cli/main.cpp
-	g++ -c cli/main.cpp -o cli/main.o
+$(CLI_OBJ): $(CLI)/main.cpp
+	g++ -c $< -o $@
 
 # executor logic
-execute : executor/executor.o
+execute : $(EXECUTOR_OBJ)
 
-executor/executor.o : executor/executor.cpp
-	g++ -c executor/executor.cpp -o executor/executor.o
+$(EXECUTOR_OBJ): $(EXECUTOR)/executor.cpp
+	g++ -c $< -o $@
 
 # parsing logic
-parse : parser/lex.yy.c parser/y.tab.c parser/y.tab.h parser/parser_y.o parser/parser_cpp.o 
+parse: $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(PARSER_CPP_OBJ)
 
-parser/parser_cpp.o : parser/parser.cpp
-	g++ -c parser/parser.cpp -o parser/parser_cpp.o
+$(PARSER_CPP_OBJ): $(PARSER)/parser.cpp
+	g++ -c $< -o $@
 
-parser/parser_y.o : parser/y.tab.c 
-	g++ -c parser/y.tab.c -o parser/parser_y.o
+$(PARSER_Y_OBJ): $(PARSER)/y.tab.c
+	g++ -c $< -o $@
 
-parser/y.tab.h parser/y.tab.c : parser/parser.y
-	bison -d --yacc -o parser/y.tab.c --defines=parser/y.tab.h parser/parser.y
+$(PARSER)/y.tab.h $(PARSER)/y.tab.c: $(PARSER)/parser.y
+	bison -d --yacc -o $@ --defines=$(PARSER)/y.tab.h $<
 
-parser/lex.yy.c : parser/lexer.l
-	flex -o parser/lex.yy.c parser/lexer.l
+$(PARSER)/lex.yy.c: $(PARSER)/lexer.l
+	flex -o $@ $<
 
 clean:
-	rm -f parser/parser_cpp.o parser/lex.yy.c parser/y.tab.c parser/y.tab.h parser/parser_y.o executor/executor.o cli/main.o ingdb output.txt
+	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt

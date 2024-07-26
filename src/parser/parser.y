@@ -8,6 +8,7 @@ int yylex();
 int yywrap();
 
 node* head = NULL;
+bool error_occured = false;
 
 %}
 
@@ -859,5 +860,11 @@ node* getParseTree(const char* input) {
     YY_BUFFER_STATE bufferState = yy_scan_string(input);
     yyparse();
     yy_delete_buffer(bufferState);
+
+    if(!error_occured){
     return head;
+    }
+    else{
+    return NULL;
+    }
 }

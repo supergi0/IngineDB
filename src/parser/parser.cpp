@@ -1,5 +1,7 @@
 #include "../include/parser/parser.hpp"
 
+extern bool error_occured;
+
 int parseInput(const char* input) {
 
     node* parsetree_head = getParseTree(input);
@@ -9,6 +11,7 @@ int parseInput(const char* input) {
         printf("Parsing complete.");
     } else {
         printf("Parsing failed.");
+        error_occured = false;
     }
 
     return 0;

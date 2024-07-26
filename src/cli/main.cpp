@@ -23,14 +23,14 @@ int main(){
 
         command += line + " ";
 
-        if(line == "help"){
+        if(line == "help" || line == "help;"){
             printHelpMessage();
             command.clear();
         }
-        else if(line == "exit"){
+        else if(line == "exit" || line == "exit;"){
             break;
         }
-        else if(line == "clear"){
+        else if(line == "clear" || line == "clear;"){
             std::cout << "\033[2J\033[1;1H";
             printInitMessage();
             command.clear();
@@ -47,8 +47,8 @@ int main(){
 
             std::cout << output << "\n";
 
-            auto duration  = std::chrono::duration_cast<std::chrono::milliseconds>(end-start);
-            std::cout << "executed in " << duration.count() / 1000.0 << " seconds\n";
+            auto duration  = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+            std::cout << std::fixed << std::setprecision(6) << "executed in " << duration.count() / 1000000.0 << " seconds\n\n";
 
             command.clear();
         }
