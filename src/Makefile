@@ -9,6 +9,7 @@ CLI_OBJ := $(CLI)/main.o
 EXECUTOR_OBJ := $(EXECUTOR)/executor.o
 PARSER_CPP_OBJ := $(PARSER)/parser_cpp.o
 PARSER_Y_OBJ := $(PARSER)/parser_y.o
+PARSER_OBJ := $(PARSER)/parser.o
 
 #This is the executable file
 INGDB := ingdb
@@ -23,7 +24,7 @@ run : parse execute cli executable
 #get executable
 executable : $(INGDB)
 
-$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(PARSER_CPP_OBJ) $(PARSER_Y_OBJ)
+$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(PARSER_OBJ)
 	g++ $^ -o $@
 
 #cli logic
@@ -39,7 +40,10 @@ $(EXECUTOR_OBJ): $(EXECUTOR)/executor.cpp
 	g++ -c $< -o $@
 
 # parsing logic
-parse: $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(PARSER_CPP_OBJ)
+parse: $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(PARSER_CPP_OBJ) $(PARSER_OBJ)
+
+$(PARSER_OBJ) : $(PARSER_CPP_OBJ) $(PARSER_Y_OBJ)
+	ld -r -o $@ $^
 
 $(PARSER_CPP_OBJ): $(PARSER)/parser.cpp
 	g++ -c $< -o $@
@@ -54,4 +58,4 @@ $(PARSER)/lex.yy.c: $(PARSER)/lexer.l
 	flex -o $@ $<
 
 clean:
-	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt
+	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt $(PARSER_OBJ)

@@ -82,7 +82,7 @@ public:
     std::string name;
     std::vector<Table> table_array;
 
-    explicit Database(std::string n) : name(std::move(n)) {}
+    explicit Database(std::string n);
 };
 
 class DatabaseManager {
@@ -90,6 +90,8 @@ public:
     std::vector<Database> database_array;
     Database* current_database;
     int count;
+
+    DatabaseManager();
 };
 
-extern DatabaseManager db_manager;
+extern DatabaseManager dbm;
