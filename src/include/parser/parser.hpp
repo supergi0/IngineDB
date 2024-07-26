@@ -1,5 +1,4 @@
-#ifndef PARSER_H
-#define PARSER_H
+#pragma once
 
 #include "../basic.hpp"
 
@@ -8,10 +7,8 @@ typedef struct node {
     char* token;
 } node;
 
-void printTree(node* head);
-
-node* getParseTree(const char* input);
+node* mknode(const char* token);
 
 int parseInput(const char* input);
 
-#endif
+node* getParseTree(const char* input);

@@ -1,7 +1,6 @@
 %{
-#include "./helper.cpp"
+#include "../include/parser/parser.hpp"
 #include "lex.yy.c"
-#include "./errors.cpp"
 
 void yyerror(const char *s);
 int yylex();
@@ -867,4 +866,9 @@ node* getParseTree(const char* input) {
     else{
     return NULL;
     }
+}
+
+void yyerror(const char *s) {
+    fprintf(stderr, "You have an error in your SQL syntax; Use the right syntax near \"%s\" ", yytext);
+    error_occured = true;
 }
