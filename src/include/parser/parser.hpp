@@ -9,6 +9,4 @@ typedef struct node {
 
 node* mknode(const char* token);
 
-int parseInput(const char* input);
-
 node* getParseTree(const char* input);

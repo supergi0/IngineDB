@@ -2,6 +2,8 @@
 
 std::vector<std::string> showDatabase(){
 
+    DatabaseManager dbm = getDBM();
+
     std::vector<std::string> return_val;
 
     for(int i = 0; i < dbm.count; i++){

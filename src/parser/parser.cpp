@@ -15,16 +15,22 @@ node* mknode(const char* token){
     return newnode;
 }
 
-int parseInput(const char* input) {
+// Functions to check the parse tree
+FILE* output;
+void recursiveprinttree(node* head, int n, int depth, int child){
+	if(head==NULL){
+		return;
+	}
 
-    node* parsetree_head = getParseTree(input);
-
-    if (parsetree_head != NULL) {
-        printf("Parsing complete.");
-    } else {
-        printf("Parsing failed.");
-        error_occured = false;
-    }
-
-    return 0;
+	fprintf(output,"{");
+	fprintf(output,"%s", head->token);
+	for(int i=0; i<20; i++){
+		recursiveprinttree(head->children[i], n+1, depth+1, i);
+	}
+	fprintf(output,"}");
+}
+void printTree(node* head){
+    output = fopen("output.txt","w+");
+    recursiveprinttree(head,1,0,0);
+    fclose(output);
 }

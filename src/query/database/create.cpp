@@ -2,6 +2,8 @@
 
 Response createDatabase(std::string &name){
 
+    DatabaseManager dbm = getDBM();
+
     // check if already exists
     for(int i = 0; i < dbm.count; i++){
         if(dbm.database_array[i].name == name){

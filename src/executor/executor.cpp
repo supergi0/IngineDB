@@ -1,11 +1,16 @@
-#include "../include/parser/parser.hpp"
+#include "../include/executor/executor.hpp"
+
+DatabaseManager& getDBM() {
+    static DatabaseManager instance;
+    return instance;
+}
 
 // used const char* here cuz of legacy c parsing logic, dont want to change that as of now
-std::string execute(const char* input) {
+Response execute(const char* input) {
 
-    std::string return_val;
-
-    parseInput(input);
-
-    return return_val;
+    return analyzeQuery(input);
 }
+
+Database::Database(std::string n) : name(std::move(n)) {}
+
+DatabaseManager::DatabaseManager() : current_database(nullptr), count(0) {}

@@ -1,4 +1,4 @@
-#include "../include/basic.hpp"
+#include "../include/response.hpp"
 
 void printInitMessage(){
     std:: cout << "\nWelcome to IngenimumDB. Commands end with ;\n";
@@ -10,4 +10,8 @@ void printInitMessage(){
 
 void printHelpMessage(){
     std:: cout << "Hello there is no help here\n";
+}
+
+Response successMessage(const std::string &message){
+    return Response({0, message});
 }

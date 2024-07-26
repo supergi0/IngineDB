@@ -7,6 +7,4 @@ typedef struct Response{
     std::string message; // Specific message to be sent
 } Response;
 
-Response successMessage(const std::string &message){
-    return Response({0, message});
-}
+Response successMessage(const std::string &message);

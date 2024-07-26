@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../parser/parser.hpp"
+#include "../query/analyzer.hpp"
 
-std::string execute(const char* input);
+Response execute(const char* input);

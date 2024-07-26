@@ -856,6 +856,7 @@ drop_database_statement
 %%
 
 node* getParseTree(const char* input) {
+    error_occured = false;
     YY_BUFFER_STATE bufferState = yy_scan_string(input);
     yyparse();
     yy_delete_buffer(bufferState);
@@ -865,6 +866,7 @@ node* getParseTree(const char* input) {
     }
     else{
     return NULL;
+
     }
 }
 

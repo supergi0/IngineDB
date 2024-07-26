@@ -94,4 +94,4 @@ public:
     DatabaseManager();
 };
 
-extern DatabaseManager dbm;
+DatabaseManager& getDBM();

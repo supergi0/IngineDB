@@ -2,6 +2,8 @@
 
 Response dropDatabase(std::string &name){
 
+    DatabaseManager dbm = getDBM();
+
     for(int i = 0; i < dbm.count; i++){
         if(dbm.database_array[i].name == name){
 

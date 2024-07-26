@@ -2,6 +2,8 @@
 
 Response useDatabase(std::string &name){
 
+    DatabaseManager dbm = getDBM();
+
     if(dbm.current_database->name == name){
         return errorMessage("alreadyusing");
     }
