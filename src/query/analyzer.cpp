@@ -40,6 +40,6 @@ Response traverseNode(node* curr){
         return Response({0,"OK"});
     }
     else {
-        return Response({1,"BAD INPUT"});
+        return Response({1,"Execution not implemented, but parsed"});
     }
 }

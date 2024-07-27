@@ -3,7 +3,7 @@ SRC := .
 CLI := cli
 EXECUTOR := executor
 PARSER := parser
-PRINT := cli/tableprint
+PRINT := printer
 QUERY := query
 QUERY_DB := query/database
 
@@ -31,7 +31,7 @@ all: run clean
 
 
 #run
-run : parse query analyze execute cli executable
+run : parse query print analyze execute cli executable
 	./$(INGDB)
 
 
