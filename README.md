@@ -1,8 +1,12 @@
 # IngeniumDB (In development)
 
-## An in-memory RDBMS that uses SQL standard. Fully built in C, with parsing using Flex and Bison/YACC.
+### Requirements
 
-for testing purposes
+- g++ (C++17)
+- flex
+- bison
+
+### For testing purposes
 
 execute following from `src/` directory
 ```bash
@@ -10,3 +14,10 @@ make all
 ```
 
 always exit with `exit` command for graceful termination with all executable and object files erasure
+
+incase of ungraceful termination, execute following from `src/` directory
+```bash
+make clean
+```
+
+
