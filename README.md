@@ -4,9 +4,9 @@
 
 for testing purposes
 
-execute 
+execute following from `src/` directory
 ```bash
-make all && make clean
+make all
 ```
 
 always exit with `exit` command for graceful termination with all executable and object files erasure
