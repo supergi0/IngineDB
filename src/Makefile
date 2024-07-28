@@ -5,7 +5,6 @@ EXECUTOR := executor
 PARSER := parser
 PRINT := printer
 QUERY := query
-QUERY_DB := query/database
 
 #These are the object files to be linked!
 CLI_OBJ := $(CLI)/main.o
@@ -14,8 +13,7 @@ PARSER_CPP_OBJ := $(PARSER)/parser_cpp.o
 PARSER_Y_OBJ := $(PARSER)/parser_y.o
 PARSER_OBJ := $(PARSER)/parser.o
 PRINT_OBJ := $(PRINT)/print.o
-QUERY_DB_OBJ := $(QUERY_DB)/create.o $(QUERY_DB)/drop.o $(QUERY_DB)/errors.o $(QUERY_DB)/show.o $(QUERY_DB)/use.o
-QUERY_DB_LINK_OBJ := $(QUERY)/query_db.o
+QUERY_DB_OBJ := $(QUERY)/database.o
 ANALYZER_OBJ := $(QUERY)/analyzer.o
 
 
@@ -39,12 +37,12 @@ run : parse query print analyze execute cli executable
 #get executable
 executable : $(INGDB)
 
-$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_LINK_OBJ) $(PARSER_OBJ)
+$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_OBJ) $(PARSER_OBJ)
 	g++ $^ -o $@
 
 
 
-#cli logic
+# cli logic
 cli: $(CLI_OBJ)
 
 $(CLI_OBJ): $(CLI)/main.cpp
@@ -77,26 +75,11 @@ $(PRINT_OBJ) : $(PRINT)/print.cpp
 
 
 # Query logic
-query: $(QUERY_DB_LINK_OBJ)
+query: $(QUERY_DB_OBJ)
 
-$(QUERY_DB_LINK_OBJ): $(QUERY_DB_OBJ)
-	ld -r -o $@ $^
-
-$(QUERY_DB)/create.o: $(QUERY_DB)/create.cpp
+$(QUERY_DB_OBJ): $(QUERY)/database.cpp
 	g++ -c $< -o $@
-
-$(QUERY_DB)/drop.o: $(QUERY_DB)/drop.cpp
-	g++ -c $< -o $@
-
-$(QUERY_DB)/errors.o: $(QUERY_DB)/errors.cpp
-	g++ -c $< -o $@
-
-$(QUERY_DB)/show.o: $(QUERY_DB)/show.cpp
-	g++ -c $< -o $@
-
-$(QUERY_DB)/use.o: $(QUERY_DB)/use.cpp
-	g++ -c $< -o $@
-
+	
 
 
 # parsing logic
@@ -121,4 +104,4 @@ $(PARSER)/lex.yy.c: $(PARSER)/lexer.l
 
 # clean all obj and extra files
 clean:
-	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt $(PARSER_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_OBJ) $(QUERY_DB_LINK_OBJ)
+	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt $(PARSER_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_OBJ)
