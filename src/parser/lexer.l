@@ -13,8 +13,9 @@ CHAR \'[^\']\'
 
 %%
 
-TABLES { strcpy(yylval.nd_obj.name,(yytext)); return TABLES; }
+
 DATABASES { strcpy(yylval.nd_obj.name,(yytext)); return DATABASES; }
+TABLES { strcpy(yylval.nd_obj.name,(yytext)); return TABLES; }
 SELECT { strcpy(yylval.nd_obj.name,(yytext)); return SELECT; }
 FROM { strcpy(yylval.nd_obj.name,(yytext)); return FROM; }
 WHERE { strcpy(yylval.nd_obj.name,(yytext)); return WHERE; }

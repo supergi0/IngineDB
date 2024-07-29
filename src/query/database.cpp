@@ -2,11 +2,9 @@
 
 Response createDatabase(std::string &name){
 
-    DatabaseManager dbm = getDBM();
-
     // check if already exists
-    for(int i = 0; i < dbm.count; i++){
-        if(dbm.database_array[i].name == name){
+    for (const auto& db : dbm.database_array) {
+        if (db.name == name) {
             return errorMessage("duplicate");
         }
     }
@@ -19,19 +17,14 @@ Response createDatabase(std::string &name){
 
 Response dropDatabase(std::string &name){
 
-    DatabaseManager dbm = getDBM();
+    for (auto it = dbm.database_array.begin(); it != dbm.database_array.end(); it++) {
 
-    for(int i = 0; i < dbm.count; i++){
-        if(dbm.database_array[i].name == name){
-
-            // First drop the ptr to the current Db then delete from the array
+        if (it->name == name) {
             if (dbm.current_database && dbm.current_database->name == name) {
                 dbm.current_database = nullptr;
             }
-            
-            dbm.database_array.erase(dbm.database_array.begin() + i);
-            dbm.count--;
 
+            dbm.database_array.erase(it);
 
             return successMessage("OK");
         }
@@ -39,6 +32,33 @@ Response dropDatabase(std::string &name){
 
     return errorMessage("notfound");
 };
+
+std::vector<std::string> showDatabase() {
+
+    std::vector<std::string> return_val;
+
+    for (const auto& db : dbm.database_array) {
+        return_val.push_back(db.name);
+    }
+
+    return return_val;
+}
+
+Response useDatabase(std::string &name) {
+
+    if (dbm.current_database && dbm.current_database->name == name) {
+        return errorMessage("alreadyusing");
+    }
+
+    for (auto& db : dbm.database_array) {
+        if (db.name == name) {
+            dbm.current_database = &db;
+            return successMessage("OK");
+        }
+    }
+
+    return errorMessage("notfound");
+}
 
 Response errorMessage(const std::string &type){
     if(type == "duplicate"){
@@ -53,36 +73,5 @@ Response errorMessage(const std::string &type){
     else{
         return Response({1,"Something went wrong.."});
     }
-}
-
-std::vector<std::string> showDatabase(){
-
-    DatabaseManager dbm = getDBM();
-
-    std::vector<std::string> return_val;
-
-    for(int i = 0; i < dbm.count; i++){
-        return_val.push_back(dbm.database_array[i].name);
-    }
-
-    return return_val;
-}
-
-Response useDatabase(std::string &name){
-
-    DatabaseManager dbm = getDBM();
-
-    if(dbm.current_database->name == name){
-        return errorMessage("alreadyusing");
-    }
-
-    for(int i = 0; i < dbm.count; i++){
-        if(dbm.database_array[i].name == name){
-            dbm.current_database = &dbm.database_array[i];
-            return successMessage("OK");
-        }
-    }
-
-    return errorMessage("notfound");
 }
 

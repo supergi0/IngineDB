@@ -763,7 +763,7 @@ show_table_statement
 show_database_statement
     : SHOW DATABASES SEMICOLON
     {
-        $$.nd = mknode("show_table_statement");
+        $$.nd = mknode("show_database_statement");
 
         $1.nd = mknode("SHOW");
         $1.nd->children[0] = mknode($1.name);

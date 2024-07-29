@@ -24,7 +24,7 @@ INGDB := ingdb
 
 
 # Run all and clean
-all: run clean
+all: run
 
 
 

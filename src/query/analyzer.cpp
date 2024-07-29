@@ -19,17 +19,20 @@ Response traverseNode(node* curr){
     std::string node_type = curr->children[0]->token;
 
     if(node_type == "use_database_statement"){
-        std::string name = curr->children[2]->token;
+        // sql query -> use database statement -> identifier -> name
+        std::string name = curr->children[0]->children[2]->children[0]->token;
         
         return useDatabase(name);
     }
     else if(node_type == "create_database_statement"){
-        std::string name = curr->children[2]->token;
+        // sql query -> create database statement -> identifier -> name
+        std::string name = curr->children[0]->children[2]->children[0]->token;
 
         return createDatabase(name);
     }
     else if(node_type == "drop_database_statement"){
-        std::string name = curr->children[2]->token;
+        // sql query -> drop database statement -> identifier -> name
+        std::string name = curr->children[0]->children[2]->children[0]->token;
 
         return dropDatabase(name);
     }

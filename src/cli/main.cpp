@@ -1,6 +1,8 @@
 #include "../include/executor/executor.hpp"
 #include "./message.cpp"
 
+DatabaseManager dbm;
+
 int main(){
 
     std::string command;

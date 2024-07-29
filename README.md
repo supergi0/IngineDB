@@ -13,9 +13,7 @@ execute following from `src/` directory
 make all
 ```
 
-always exit with `exit` command for graceful termination with all executable and object files erasure
-
-incase of ungraceful termination, execute following from `src/` directory
+before pushing to repo make sure to execute following from `src/` directory
 ```bash
 make clean
 ```
