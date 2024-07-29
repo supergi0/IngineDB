@@ -12,5 +12,6 @@
 #include <unordered_map>
 #include <chrono>
 #include <iomanip>
+#include <variant>
 
 const size_t INIT_COLUMNS = 64;

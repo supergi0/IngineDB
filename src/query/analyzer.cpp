@@ -38,7 +38,14 @@ Response traverseNode(node* curr){
     }
     else if(node_type == "show_database_statement"){
         std::vector<std::string> database_names = showDatabase();
-        lineprint(database_names);
+
+        std::vector<std::vector<std::string>> simple_table;
+
+        for(int i=0;i<database_names.size();i++){
+            simple_table.push_back({database_names[i]});
+        }
+
+        simpleTablePrint({"show databases;"},simple_table);
 
         return Response({0,"OK"});
     }

@@ -47,10 +47,10 @@ int main(){
 
             auto end = std::chrono::high_resolution_clock::now();
 
-            std::cout << output.message << "\n";
+            std::cout << output.message;
 
             auto duration  = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
-            std::cout << std::fixed << std::setprecision(6) << "executed in " << duration.count() / 1000000.0 << " seconds\n\n";
+            std::cout << std::fixed << std::setprecision(6) << ", executed in " << duration.count() / 1000000.0 << " seconds\n\n";
 
             command.clear();
         }
