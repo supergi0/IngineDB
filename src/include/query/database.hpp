@@ -2,14 +2,14 @@
 
 #include "../structure.hpp"
 #include "../response.hpp"
+#include "../parser/parser.hpp"
+#include "../output.hpp"
 
-Response createDatabase(std::string &name);
+Response createDatabase(node* root);
 
-Response useDatabase(std::string &name);
+Response useDatabase(node* root);
 
-Response dropDatabase(std::string &name);
+Response dropDatabase(node* root);
 
-std::vector<std::string> showDatabase();
-
-Response errorMessage(const std::string &type);
+Response showDatabase();
 

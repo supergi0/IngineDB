@@ -4,4 +4,3 @@
 #include "../parser/parser.hpp"
 
 Response analyzeQuery(const char* input);
-Response traverseNode(node* curr);

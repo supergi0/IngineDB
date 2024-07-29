@@ -1,4 +1,4 @@
-#include "../include/print.hpp"
+#include "../include/output.hpp"
 
 void lineprint(std::vector<std::string> input){
     for(int i = 0; i < input.size(); i++){
@@ -8,7 +8,10 @@ void lineprint(std::vector<std::string> input){
 }
 
 void simpleTablePrint(const std::vector<std::string>& column_names, const std::vector<std::vector<std::string>>& cells) {
-    if (column_names.empty() || cells.empty()) return;
+    if (column_names.empty() || cells.empty()){
+        std::cout << "empty set" << std::endl;
+        return;
+    };
 
     // Calculate the maximum width for each column
     std::vector<size_t> column_widths(column_names.size());

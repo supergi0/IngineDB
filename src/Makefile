@@ -3,7 +3,7 @@ SRC := .
 CLI := cli
 EXECUTOR := executor
 PARSER := parser
-PRINT := printer
+OUTPUT := output
 QUERY := query
 
 #These are the object files to be linked!
@@ -12,7 +12,9 @@ EXECUTOR_OBJ := $(EXECUTOR)/executor.o
 PARSER_CPP_OBJ := $(PARSER)/parser_cpp.o
 PARSER_Y_OBJ := $(PARSER)/parser_y.o
 PARSER_OBJ := $(PARSER)/parser.o
-PRINT_OBJ := $(PRINT)/print.o
+OUTPUT_OBJ := $(OUTPUT)/output.o
+PRINTER_OBJ := $(OUTPUT)/printer.o
+MESSAGE_OBJ := $(OUTPUT)/message.o
 QUERY_DB_OBJ := $(QUERY)/database.o
 ANALYZER_OBJ := $(QUERY)/analyzer.o
 
@@ -29,7 +31,7 @@ all: run
 
 
 #run
-run : parse query print analyze execute cli executable
+run : parse query output analyze execute cli executable
 	./$(INGDB)
 
 
@@ -37,7 +39,7 @@ run : parse query print analyze execute cli executable
 #get executable
 executable : $(INGDB)
 
-$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_OBJ) $(PARSER_OBJ)
+$(INGDB): $(CLI_OBJ) $(EXECUTOR_OBJ) $(ANALYZER_OBJ) $(OUTPUT_OBJ) $(QUERY_DB_OBJ) $(PARSER_OBJ)
 	g++ $^ -o $@
 
 
@@ -67,9 +69,15 @@ $(ANALYZER_OBJ) : $(QUERY)/analyzer.cpp
 
 
 # print logic
-print : $(PRINT_OBJ)
+output : $(OUTPUT_OBJ)
 
-$(PRINT_OBJ) : $(PRINT)/print.cpp
+$(OUTPUT_OBJ) : $(PRINTER_OBJ) $(MESSAGE_OBJ)
+	ld -r -o $@ $^
+
+$(PRINTER_OBJ) : $(OUTPUT)/printer.cpp
+	g++ -c $< -o $@
+
+$(MESSAGE_OBJ) : $(OUTPUT)/message.cpp
 	g++ -c $< -o $@
 
 
@@ -104,4 +112,4 @@ $(PARSER)/lex.yy.c: $(PARSER)/lexer.l
 
 # clean all obj and extra files
 clean:
-	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt $(PARSER_OBJ) $(ANALYZER_OBJ) $(PRINT_OBJ) $(QUERY_DB_OBJ)
+	rm -f $(PARSER_CPP_OBJ) $(PARSER)/lex.yy.c $(PARSER)/y.tab.c $(PARSER)/y.tab.h $(PARSER_Y_OBJ) $(EXECUTOR_OBJ) $(CLI_OBJ) $(INGDB) output.txt $(PARSER_OBJ) $(ANALYZER_OBJ) $(PRINTER_OBJ) $(OUTPUT_OBJ) $(MESSAGE_OBJ) $(QUERY_DB_OBJ) 

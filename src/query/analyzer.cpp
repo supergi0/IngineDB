@@ -1,55 +1,32 @@
 #include "../include/query/analyzer.hpp"
-#include "../include/print.hpp"
 
 Response analyzeQuery(const char* input){
 
     node* root = getParseTree(input);
 
-    if(!root){
-        // head is null some parsing error occured
-        return Response({1,"Unknown error in parsing"});
-    }
+    if(root && root->children[0] && root->children[0]->token){
 
-    // going forward lets make this the recursive function responsible for analyzing the parse tree
-    return traverseNode(root);
-}
+        // base query statement
+        std::string base_query_statement = root->children[0]->token;
 
-Response traverseNode(node* curr){
-
-    std::string node_type = curr->children[0]->token;
-
-    if(node_type == "use_database_statement"){
-        // sql query -> use database statement -> identifier -> name
-        std::string name = curr->children[0]->children[2]->children[0]->token;
-        
-        return useDatabase(name);
-    }
-    else if(node_type == "create_database_statement"){
-        // sql query -> create database statement -> identifier -> name
-        std::string name = curr->children[0]->children[2]->children[0]->token;
-
-        return createDatabase(name);
-    }
-    else if(node_type == "drop_database_statement"){
-        // sql query -> drop database statement -> identifier -> name
-        std::string name = curr->children[0]->children[2]->children[0]->token;
-
-        return dropDatabase(name);
-    }
-    else if(node_type == "show_database_statement"){
-        std::vector<std::string> database_names = showDatabase();
-
-        std::vector<std::vector<std::string>> simple_table;
-
-        for(int i=0;i<database_names.size();i++){
-            simple_table.push_back({database_names[i]});
+        if(base_query_statement == "use_database_statement"){
+            return useDatabase(root->children[0]);
         }
-
-        simpleTablePrint({"show databases;"},simple_table);
-
-        return Response({0,"OK"});
+        else if(base_query_statement == "create_database_statement"){
+            return createDatabase(root->children[0]);
+        }
+        else if(base_query_statement == "drop_database_statement"){
+            return dropDatabase(root->children[0]);
+        }
+        else if(base_query_statement == "show_database_statement"){
+            return showDatabase();
+        }
+        else {
+            return Response({1,"Parsed but no query analyzer implemented"});
+        }
     }
-    else {
-        return Response({1,"Execution not implemented, but parsed"});
+    else{
+        return Response({1,"Malformed parse tree"});
     }
+
 }

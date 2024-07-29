@@ -1,11 +1,14 @@
 #include "../include/query/database.hpp"
 
-Response createDatabase(std::string &name){
+Response createDatabase(node* root){
+
+    // use database statement -> identifier -> name
+    std::string name = root->children[2]->children[0]->token;
 
     // check if already exists
     for (const auto& db : dbm.database_array) {
         if (db.name == name) {
-            return errorMessage("duplicate");
+            return databaseErrorMessage("duplicate");
         }
     }
 
@@ -15,7 +18,10 @@ Response createDatabase(std::string &name){
         return successMessage("OK");
 };
 
-Response dropDatabase(std::string &name){
+Response dropDatabase(node* root){
+
+    // use database statement -> identifier -> name
+    std::string name = root->children[2]->children[0]->token;
 
     for (auto it = dbm.database_array.begin(); it != dbm.database_array.end(); it++) {
 
@@ -30,24 +36,29 @@ Response dropDatabase(std::string &name){
         }
     }
 
-    return errorMessage("notfound");
+    return databaseErrorMessage("notfound");
 };
 
-std::vector<std::string> showDatabase() {
+Response showDatabase() {
 
-    std::vector<std::string> return_val;
+    std::vector<std::vector<std::string>> simple_table;
 
     for (const auto& db : dbm.database_array) {
-        return_val.push_back(db.name);
+        simple_table.push_back({db.name});
     }
 
-    return return_val;
+    simpleTablePrint({"show databases;"},simple_table);
+
+    return successMessage("OK");
 }
 
-Response useDatabase(std::string &name) {
+Response useDatabase(node* root) {
+
+    // use database statement -> identifier -> name
+    std::string name = root->children[2]->children[0]->token;
 
     if (dbm.current_database && dbm.current_database->name == name) {
-        return errorMessage("alreadyusing");
+        return databaseErrorMessage("alreadyusing");
     }
 
     for (auto& db : dbm.database_array) {
@@ -57,21 +68,6 @@ Response useDatabase(std::string &name) {
         }
     }
 
-    return errorMessage("notfound");
-}
-
-Response errorMessage(const std::string &type){
-    if(type == "duplicate"){
-        return Response({1,"Database already exists"});
-    }
-    else if(type == "notfound"){
-        return Response({1,"Database does not exist"});
-    }
-    else if(type == "alreadyusing"){
-        return Response({1,"Already using the database"});
-    }
-    else{
-        return Response({1,"Something went wrong.."});
-    }
+    return databaseErrorMessage("notfound");
 }
 
