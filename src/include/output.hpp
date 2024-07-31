@@ -1,11 +1,16 @@
 #pragma once
 
 #include "./basic.hpp"
-#include "./response.hpp"
 
-void lineprint(std::vector<std::string> input);
 
-void simpleTablePrint(const std::vector<std::string>& column_names, const std::vector<std::vector<std::string>>& cells);
+// Response messages defined under here --------
+
+typedef struct Response{
+    int type; // 0 -> successful | >0 -> error 
+    std::string message; // Specific message to be sent
+} Response;
+
+Response successMessage(const std::string &message);
 
 Response databaseErrorMessage(const std::string &type);
 
@@ -13,4 +18,12 @@ void printInitMessage();
 
 void printHelpMessage();
 
-Response successMessage(const std::string &message);
+
+
+
+// Basic cli print messages defined under here ----------
+
+
+void lineprint(std::vector<std::string> input);
+
+void simpleTablePrint(const std::vector<std::string>& column_names, const std::vector<std::vector<std::string>>& cells);
