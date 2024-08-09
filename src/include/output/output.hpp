@@ -14,15 +14,11 @@ Response successMessage(const std::string &message);
 
 Response databaseErrorMessage(const std::string &type);
 
+// Basic cli print messages defined under here ----------
+
 void printInitMessage();
 
 void printHelpMessage();
-
-
-
-
-// Basic cli print messages defined under here ----------
-
 
 void lineprint(std::vector<std::string> input);
 
