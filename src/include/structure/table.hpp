@@ -5,6 +5,11 @@
 class Table {
 public:
     std::string name;
+    std::vector<Column> column_array;
 
-    Table(std::string name) : name(name) {}
+    Table(std::string name, const std::vector<DataType>& types) : name(name) {
+        for(const auto& type : types){
+            column_array.emplace_back(type);
+        }
+    }
 };

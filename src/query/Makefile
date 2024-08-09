@@ -1,17 +1,25 @@
 # query/Makefile
 
-QUERY_DB_OBJ := database.o
+DATABASE_OBJ := database.o
 ANALYZER_OBJ := analyzer.o
+TABLE_OBJ := table.o
+QUERY_OBJ := query.o
 
 .PHONY: all clean
 
-all: $(QUERY_DB_OBJ) $(ANALYZER_OBJ)
+all: $(QUERY_OBJ)
 
-$(QUERY_DB_OBJ): database.cpp
+$(QUERY_OBJ): $(ANALYZER_OBJ) $(DATABASE_OBJ) $(TABLE_OBJ)
+	ld -r -o $@ $^
+
+$(DATABASE_OBJ): database.cpp
 	g++ -c $< -o $@
 
 $(ANALYZER_OBJ): analyzer.cpp
 	g++ -c $< -o $@
 
+$(TABLE_OBJ): table.cpp
+	g++ -c $< -o $@
+
 clean:
-	rm -f $(QUERY_DB_OBJ) $(ANALYZER_OBJ)
+	rm -f $(DATABASE_OBJ) $(ANALYZER_OBJ) $(TABLE_OBJ) $(QUERY_OBJ)

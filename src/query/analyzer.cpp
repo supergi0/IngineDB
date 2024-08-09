@@ -10,16 +10,19 @@ Response analyzeQuery(const char* input){
         std::string base_query_statement = root->children[0]->token;
 
         if(base_query_statement == "use_database_statement"){
-            return dbm.useDatabase(root->children[0]);
+            return useDatabase(root->children[0]);
         }
         else if(base_query_statement == "create_database_statement"){
-            return dbm.createDatabase(root->children[0]);
+            return createDatabase(root->children[0]);
         }
         else if(base_query_statement == "drop_database_statement"){
-            return dbm.dropDatabase(root->children[0]);
+            return dropDatabase(root->children[0]);
         }
         else if(base_query_statement == "show_database_statement"){
-            return dbm.showDatabase();
+            return showDatabase();
+        }
+        else if(base_query_statement == "show_table_statement"){
+            return showTable();
         }
         else {
             return Response({1,"Parsed but no query analyzer implemented"});

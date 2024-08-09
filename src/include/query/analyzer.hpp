@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../structure/database_manager.hpp"
+#include "./database.hpp"
+#include "./table.hpp"
 #include "../parser/parser.hpp"
 
 Response analyzeQuery(const char* input);

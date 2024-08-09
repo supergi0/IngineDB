@@ -1,6 +1,6 @@
-#include "../include/structure/database_manager.hpp"
+#include "../include/query/database.hpp"
 
-Response DatabaseManager::createDatabase(node* root){
+Response createDatabase(node* root){
 
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;
@@ -18,7 +18,7 @@ Response DatabaseManager::createDatabase(node* root){
         return successMessage("OK");
 };
 
-Response DatabaseManager::dropDatabase(node* root){
+Response dropDatabase(node* root){
 
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;
@@ -39,7 +39,7 @@ Response DatabaseManager::dropDatabase(node* root){
     return databaseErrorMessage("notfound");
 };
 
-Response DatabaseManager::showDatabase() {
+Response showDatabase() {
 
     std::vector<std::vector<std::string>> simple_table;
 
@@ -52,7 +52,7 @@ Response DatabaseManager::showDatabase() {
     return successMessage("OK");
 }
 
-Response DatabaseManager::useDatabase(node* root) {
+Response useDatabase(node* root) {
 
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;

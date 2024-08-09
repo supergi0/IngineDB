@@ -13,3 +13,5 @@
 #include <chrono>
 #include <iomanip>
 #include <variant>
+#include <stdexcept>
+#include <functional>

@@ -5,8 +5,7 @@ INGDB := ingdb
 
 CLI_OBJ := cli/main.o
 EXECUTOR_OBJ := executor/executor.o
-ANALYZER_OBJ := query/analyzer.o
-DATABASE_QUERY_OBJ := query/database.o
+QUERY_OBJ := query/query.o
 PARSER_OBJ := parser/parser.o
 OUTPUT_OBJ := output/output.o
 
@@ -14,7 +13,7 @@ OUTPUT_OBJ := output/output.o
 
 all: $(SUBDIRS)
 	$(MAKE) --no-print-directory -C cli
-	g++ $(CLI_OBJ) $(EXECUTOR_OBJ) $(ANALYZER_OBJ) $(OUTPUT_OBJ) $(DATABASE_QUERY_OBJ) $(PARSER_OBJ) -o $(INGDB)
+	g++ $(CLI_OBJ) $(EXECUTOR_OBJ) $(QUERY_OBJ) $(OUTPUT_OBJ) $(PARSER_OBJ) -o $(INGDB)
 	./ingdb
 
 $(SUBDIRS):
