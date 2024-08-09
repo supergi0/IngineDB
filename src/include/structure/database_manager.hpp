@@ -2,7 +2,7 @@
 
 #include "./database.hpp"
 #include "../parser/parser.hpp"
-#include "../output.hpp"
+#include "../output/output.hpp"
 
 class DatabaseManager {
 public:

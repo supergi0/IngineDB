@@ -1,4 +1,4 @@
-#include "../include/output.hpp"
+#include "../include/output/output.hpp"
 
 void lineprint(std::vector<std::string> input){
     for(int i = 0; i < input.size(); i++){

@@ -1,4 +1,4 @@
-#include "../include/output.hpp"
+#include "../include/output/output.hpp"
 
 void printInitMessage(){
     std:: cout << "\nWelcome to IngenimumDB. Commands end with ;\n";
