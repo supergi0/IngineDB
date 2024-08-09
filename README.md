@@ -2,7 +2,7 @@
 
 ### Requirements
 
-- g++ (C++17)
+- g++
 - flex
 - bison
 
