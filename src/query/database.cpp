@@ -1,73 +1,58 @@
 #include "../include/query/database.hpp"
 
 Response createDatabase(node* root){
-
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;
 
     // check if already exists
-    for (const auto& db : dbm.database_array) {
-        if (db.name == name) {
-            return databaseErrorMessage("duplicate");
-        }
+    if(dbm.exists(name)){
+        return databaseErrorMessage("duplicate");
     }
 
-    Database new_database(name);
-    dbm.database_array.push_back(new_database);
-
-        return successMessage("OK");
+    dbm.add(name);
+    return successMessage("OK");
 };
 
 Response dropDatabase(node* root){
-
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;
 
-    for (auto it = dbm.database_array.begin(); it != dbm.database_array.end(); it++) {
-
-        if (it->name == name) {
-            if (dbm.current_database && dbm.current_database->name == name) {
-                dbm.current_database = nullptr;
-            }
-
-            dbm.database_array.erase(it);
-
-            return successMessage("OK");
-        }
+    // check if exists
+    if(dbm.exists(name)){
+        dbm.remove(name);
+        return successMessage("OK");
     }
 
     return databaseErrorMessage("notfound");
 };
 
 Response showDatabase() {
-
     std::vector<std::vector<std::string>> simple_table;
 
-    for (const auto& db : dbm.database_array) {
-        simple_table.push_back({db.name});
+    std::vector<std::string> databases = dbm.get_databases();
+
+    for (const auto& db : databases) {
+        simple_table.push_back({db});
     }
 
-    simpleTablePrint({"show databases;"},simple_table);
+    simpleTablePrint({"show databases"},simple_table);
 
     return successMessage("OK");
 }
 
 Response useDatabase(node* root) {
-
     // use database statement -> identifier -> name
     std::string name = root->children[2]->children[0]->token;
 
-    if (dbm.current_database && dbm.current_database->name == name) {
+    if (dbm.get_current() == name) {
         return databaseErrorMessage("alreadyusing");
     }
 
-    for (auto& db : dbm.database_array) {
-        if (db.name == name) {
-            dbm.current_database = &db;
-            return successMessage("OK");
-        }
+    if(!dbm.exists(name)){
+        return databaseErrorMessage("notfound");
     }
 
-    return databaseErrorMessage("notfound");
+    dbm.set_current(name);
+    return successMessage("OK");
 }
 
