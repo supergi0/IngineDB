@@ -24,6 +24,12 @@ Response analyzeQuery(const char* input){
         else if(base_query_statement == "show_table_statement"){
             return showTable();
         }
+        else if(base_query_statement == "drop_table_statement"){
+            return dropTable(root->children[0]);
+        }
+        else if(base_query_statement == "create_table_statement"){
+            
+        }
         else {
             return Response({1,"Parsed but no query analyzer implemented"});
         }
