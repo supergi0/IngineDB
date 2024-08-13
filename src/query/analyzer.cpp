@@ -28,7 +28,7 @@ Response analyzeQuery(const char* input){
             return dropTable(root->children[0]);
         }
         else if(base_query_statement == "create_table_statement"){
-            
+            return createTable(root->children[0]);
         }
         else {
             return Response({1,"Parsed but no query analyzer implemented"});

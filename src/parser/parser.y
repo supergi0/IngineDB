@@ -734,9 +734,9 @@ drop_table_statement
 
 
         $$.nd->children[0] = $1.nd;
-        $$.nd->children[0] = $2.nd;
-        $$.nd->children[0] = $3.nd;
-        $$.nd->children[0] = $4.nd;
+        $$.nd->children[1] = $2.nd;
+        $$.nd->children[2] = $3.nd;
+        $$.nd->children[3] = $4.nd;
     }
     ;
 

@@ -26,6 +26,21 @@ Response databaseErrorMessage(const std::string &type){
     else if(type == "alreadyusing"){
         return Response({1,"Already using the database"});
     }
+    else if(type == "notset"){
+        return Response({1,"Select a database before executing queries"});
+    }
+    else{
+        return Response({1,"Something went wrong.."});
+    }
+}
+
+Response tableErrorMessage(const std::string &type){
+    if(type == "duplicate"){
+        return Response({1,"Table already exists"});
+    }
+    else if(type == "notfound"){
+        return Response({1,"Table does not exist"});
+    }
     else{
         return Response({1,"Something went wrong.."});
     }

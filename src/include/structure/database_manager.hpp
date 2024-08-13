@@ -7,9 +7,10 @@
 class DatabaseManager {
 private:
     std::vector<Database> database_array;
-    Database* current_database;
 
 public:
+    Database* current_database;
+    
     DatabaseManager() : database_array(), current_database(nullptr) {}
 
     bool set_current(std::string name);
