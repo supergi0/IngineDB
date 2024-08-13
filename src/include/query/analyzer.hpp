@@ -5,3 +5,5 @@
 #include "../parser/parser.hpp"
 
 Response analyzeQuery(const char* input);
+
+void executeQueries(node* root);

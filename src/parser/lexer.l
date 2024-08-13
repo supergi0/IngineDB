@@ -7,6 +7,7 @@ DIGIT [0-9]
 ID [a-zA-Z][a-zA-Z0-9_]*
 STRING \"[^\"]*\"
 CHAR \'[^\']\'
+AT_FILE "@"[^ \t\n]+
 
 
 %option case-insensitive
@@ -52,10 +53,12 @@ OR   { strcpy(yylval.nd_obj.name,(yytext)); return OR; }
 {STRING} { strcpy(yylval.nd_obj.name,(yytext)); return VARCHAR_VAL; }
 {DIGIT}+"."{DIGIT}+ { strcpy(yylval.nd_obj.name,(yytext)); return FLOAT_VAL; }
 {CHAR} { strcpy(yylval.nd_obj.name,(yytext)); return CHAR_VAL; }
+{AT_FILE} { strcpy(yylval.nd_obj.name, yytext); return AT_FILE;}
 [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] { strcpy(yylval.nd_obj.name,(yytext)); return DATE_VAL; }
 [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][ ][0-9][0-9]:[0-9][0-9]:[0-9][0-9] { strcpy(yylval.nd_obj.name,(yytext)); return TIMESTAMP_VAL; }
 
 {ID} { strcpy(yylval.nd_obj.name,(yytext)); return IDENTIFIER; }
+
 
 "(" { strcpy(yylval.nd_obj.name,(yytext)); return LPAREN; }
 ")" { strcpy(yylval.nd_obj.name,(yytext)); return RPAREN; }

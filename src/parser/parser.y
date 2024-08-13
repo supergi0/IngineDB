@@ -18,14 +18,14 @@ bool error_occured = false;
     } nd_obj;
 }
 
-%token <nd_obj> SELECT FROM WHERE INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE DROP DATABASE USE SHOW TABLES DATABASES
+%token <nd_obj> SELECT FROM WHERE INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE DROP DATABASE USE SHOW TABLES DATABASES AT_FILE
 %token <nd_obj> INT_TYPE VARCHAR_TYPE BOOLEAN_TYPE FLOAT_TYPE CHAR_TYPE DATE_TYPE TIMESTAMP_TYPE
 %token <nd_obj> INT_VAL VARCHAR_VAL TRUE_VAL FALSE_VAL FLOAT_VAL CHAR_VAL DATE_VAL TIMESTAMP_VAL NULL_VAL
 %token <nd_obj> IDENTIFIER LPAREN RPAREN COMMA SEMICOLON ASTERISK
 %token <nd_obj> EQ LT GT LE GE NE
 %token <nd_obj> AND OR
 
-%type<nd_obj> sql_query select_statement insert_statement update_statement delete_statement create_table_statement drop_table_statement show_table_statement
+%type<nd_obj> sql_query select_statement insert_statement update_statement delete_statement create_table_statement drop_table_statement show_table_statement at_file_statement
 %type<nd_obj> create_database_statement use_database_statement drop_database_statement show_database_statement
 %type<nd_obj> select_list table_list column_list value_list update_list column_definitions column_definition
 %type<nd_obj> where_clause
@@ -113,6 +113,29 @@ sql_query
     {
         $$.nd = mknode("sql_query");
         $$.nd->children[0] = $1.nd;
+        head = $$.nd;
+    }
+    | at_file_statement
+    {
+        $$.nd = mknode("sql_query");
+        $$.nd->children[0] = $1.nd;
+        head = $$.nd;
+    }
+
+at_file_statement:
+     AT_FILE SEMICOLON
+    {
+        $$.nd = mknode("at_file_statement");
+        
+        $1.nd = mknode("AT_FILE");
+        $1.nd->children[0] = mknode($1.name);
+        
+        $2.nd = mknode("SEMICOLON");
+        $2.nd->children[0] = mknode($2.name);
+        
+        $$.nd->children[0] = $1.nd;
+        $$.nd->children[1] = $2.nd;
+        
         head = $$.nd;
     }
     ;
