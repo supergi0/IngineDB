@@ -22,7 +22,7 @@ make clean
 
 The parsing of IngDB is case insensitive for all tokens, except for string literals. All statements always end in a semicolon `;`
 
-### Database State,emts
+### Database Statements
 
 ```sql
 CREATE DATABASE MUSIC;
