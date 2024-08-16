@@ -18,8 +18,40 @@ before pushing to repo make sure to clean the folders by executing the following
 make clean
 ```
 
+## SQL statements
 
-### Folder Structure
+The parsing of IngDB is case insensitive for all tokens, except for string literals. All statements always end in a semicolon `;`
+
+### DATATABASE STATEMENTS
+
+```sql
+CREATE DATABASE MUSIC;
+
+DROP DATABASE MUSIC;
+
+USE DATABASE MUSIC;
+
+SHOW DATABASES;
+```
+
+### TABLE STATEMENTS
+
+```sql
+DROP TABLE AUTHORS;
+
+SHOW TABLES;
+
+```
+
+### IMPORT STATEMENTS
+
+```sql
+-- use / for absolute path, ./ for .sql files stored in directory of the executable
+@/PATH/TO/YOUR/FILE/hello.sql;
+```
+
+
+## Folder Structure
 
 - `cli` : Contains the main function, defines the entry point for IngeniumDB CLI.
 
