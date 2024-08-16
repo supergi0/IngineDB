@@ -46,9 +46,10 @@ bool DatabaseManager::remove(std::string name){
         if(it->name == name){
 
             if(current_database && current_database->name == name){
-                current_database == nullptr;
+                current_database = nullptr;
             }
             database_array.erase(it);
+
             return true;
         }
     }

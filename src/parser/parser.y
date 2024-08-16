@@ -135,8 +135,6 @@ at_file_statement:
         
         $$.nd->children[0] = $1.nd;
         $$.nd->children[1] = $2.nd;
-        
-        head = $$.nd;
     }
     ;
 

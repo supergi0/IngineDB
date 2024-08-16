@@ -13,7 +13,6 @@ STRUCTURE_OBJ := structure/structure.o
 .PHONY: all clean $(SUBDIRS)
 
 all: $(SUBDIRS)
-	$(MAKE) --no-print-directory -C cli
 	g++ $(CLI_OBJ) $(EXECUTOR_OBJ) $(QUERY_OBJ) $(STRUCTURE_OBJ) $(OUTPUT_OBJ) $(PARSER_OBJ) -o $(INGDB)
 	./ingdb
 
