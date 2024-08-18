@@ -50,6 +50,8 @@ bool DatabaseManager::remove(std::string name){
             }
             database_array.erase(it);
 
+            database_array.shrink_to_fit();
+
             return true;
         }
     }
