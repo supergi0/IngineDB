@@ -20,7 +20,7 @@ Response dropTable(node* root){
 
     if(root->children[2]->children[0]->token){
     
-    std::cout << root->children[2]->children[0]->token << std::endl;
+    std::cout << root->children[2]->children[0]->token << "\n";
     }
 
     std::string name = root->children[2]->children[0]->token;

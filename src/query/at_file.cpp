@@ -12,7 +12,7 @@ void executeQueries(node* root) {
 
     std::ifstream file(filename, std::ifstream::binary);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        std::cerr << "Failed to open file: " << filename << "\n";
         return;
     }
 
@@ -31,7 +31,7 @@ void executeQueries(node* root) {
                     Response response = analyzeQuery(query.c_str());
 
                     if(response.type == 1){
-                        std::cout << response.message << std::endl;
+                        std::cout << response.message << "\n";
                     }
                 }
                 query.clear();
