@@ -10,6 +10,7 @@ Response createDatabase(node* root){
     }
 
     dbm.add(name);
+
     return successMessage("OK");
 };
 

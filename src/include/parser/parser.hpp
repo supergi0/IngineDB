@@ -10,3 +10,5 @@ typedef struct node {
 node* mknode(const char* token);
 
 node* getParseTree(const char* input);
+
+void deleteNode(node* head);

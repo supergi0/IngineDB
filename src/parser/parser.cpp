@@ -34,3 +34,24 @@ void printTree(node* head){
     recursiveprinttree(head,1,0,0);
     fclose(output);
 }
+
+void deleteNode(node* head) {
+    if (head == NULL) {
+        return;
+    }
+
+    // Recursively delete children
+    for (int i = 0; i < 20; i++) {
+        if (head->children[i] != NULL) {
+            deleteNode(head->children[i]);
+        }
+    }
+
+    // Free the token
+    if (head->token != NULL) {
+        free(head->token);
+    }
+
+    // Delete the node itself
+    delete head;
+}
