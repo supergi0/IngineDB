@@ -1,4 +1,4 @@
-#include "../include/query/analyzer.hpp"
+#include "../include/query/analyzer_q.hpp"
 
 Response analyzeQuery(const char* input) {
     node* root = getParseTree(input);

@@ -1,4 +1,4 @@
-#include "../include/structure/database.hpp"
+#include "../include/structure/database_s.hpp"
 
 bool Database::add(std::string name){
     return true;

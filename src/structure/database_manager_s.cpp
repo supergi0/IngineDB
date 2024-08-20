@@ -1,4 +1,4 @@
-#include "../include/structure/database_manager.hpp"
+#include "../include/structure/database_manager_s.hpp"
 
 bool DatabaseManager::set_current(std::string name){
     for(auto &db: database_array){

@@ -11,10 +11,10 @@ all: $(STRUCTURE_OBJ)
 $(STRUCTURE_OBJ): $(DATABASE_MANAGER_OBJ) $(DATABASE_OBJ)
 	ld -r -o $@ $^
 
-$(DATABASE_OBJ): database.cpp
+$(DATABASE_OBJ): database_s.cpp
 	g++ -c $< -o $@
 
-$(DATABASE_MANAGER_OBJ): database_manager.cpp
+$(DATABASE_MANAGER_OBJ): database_manager_s.cpp
 	g++ -c $< -o $@
 
 clean:

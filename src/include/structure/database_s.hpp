@@ -1,6 +1,6 @@
 #pragma once
 
-#include "table.hpp"
+#include "table_s.hpp"
 
 class Database {
 public:

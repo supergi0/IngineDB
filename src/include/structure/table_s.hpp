@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./column.hpp"
+#include "./column_s.hpp"
 
 class Table {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./database.hpp"
+#include "./database_s.hpp"
 #include "../parser/parser.hpp"
 #include "../output/output.hpp"
 

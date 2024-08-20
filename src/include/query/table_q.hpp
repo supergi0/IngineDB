@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../parser/parser.hpp"
-#include "../structure/database_manager.hpp"
+#include "../structure/database_manager_s.hpp"
 #include "../output/output.hpp"
 
 Response createTable(node* root);

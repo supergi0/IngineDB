@@ -13,16 +13,16 @@ all: $(QUERY_OBJ)
 $(QUERY_OBJ): $(ANALYZER_OBJ) $(DATABASE_OBJ) $(TABLE_OBJ) $(AT_FILE_OBJ)
 	ld -r -o $@ $^
 
-$(DATABASE_OBJ): database.cpp
+$(DATABASE_OBJ): database_q.cpp
 	g++ -c $< -o $@
 
-$(ANALYZER_OBJ): analyzer.cpp
+$(ANALYZER_OBJ): analyzer_q.cpp
 	g++ -c $< -o $@
 
-$(TABLE_OBJ): table.cpp
+$(TABLE_OBJ): table_q.cpp
 	g++ -c $< -o $@
 
-$(AT_FILE_OBJ): at_file.cpp
+$(AT_FILE_OBJ): at_file_q.cpp
 	g++ -c $< -o $@
 
 clean:
