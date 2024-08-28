@@ -18,13 +18,14 @@ Response createTable(node* root){
 
     while(curr_column){
 
-        if(curr_column->token == "column_definitions"){
+        if(strcmp(curr_column->token,"column_definitions")==0){
+
             if(curr_column->children[2]){
                 //the node splits to more columns, i.e. we havent reached the end of columns 
 
                 // column information will be in 3rd node 
-                std::string column_name = curr_column->children[2]->children[0]->token;
-                std::string column_type = curr_column->children[2]->children[1]->token;
+                std::string column_name = curr_column->children[2]->children[0]->children[0]->token;
+                std::string column_type = curr_column->children[2]->children[1]->children[0]->token;
 
                 columns_information.push_back({column_name,column_type});
             }
@@ -33,8 +34,8 @@ Response createTable(node* root){
 
                 // column information will be in 1st node
                 // column_definitions -> column_definition -> id/type -> string
-                std::string column_name = curr_column->children[0]->children[0]->token;
-                std::string column_type = curr_column->children[0]->children[1]->token;
+                std::string column_name = curr_column->children[0]->children[0]->children[0]->token;
+                std::string column_type = curr_column->children[0]->children[1]->children[0]->token;
 
                 columns_information.push_back({column_name,column_type});
             }
@@ -43,8 +44,11 @@ Response createTable(node* root){
         curr_column = curr_column->children[0];
     }
 
-    dbm.current_database->add(name,columns_information);
+    if(dbm.current_database->add(name,columns_information)){
     return successMessage("OK");
+    }
+
+    return tableErrorMessage("columnunknown");
 };
 
 Response dropTable(node* root){
@@ -81,3 +85,76 @@ Response showTable(){
     
     return successMessage("OK");
 };
+
+Response insertTable(node * root){
+
+    // check if the current database is set or not
+    if(!dbm.isset()) return databaseErrorMessage("notset");
+
+    // insert_table_statement -> identifier -> name -> string
+    std::string name = root->children[2]->children[0]->token;
+
+    // get the current table object
+    Table* target_table = nullptr;
+    for(auto& table: dbm.current_database->table_array){
+        if(table.name == name){
+            target_table = &table;
+            break;
+        }
+    }
+
+    // if table does not exist then exit
+    if(!target_table){
+        return tableErrorMessage("notfound");
+    }
+
+    // get the columns from the parse tree
+    std::vector<std::string> column_names;
+    node* curr_column_name = root->children[4];
+
+    while(curr_column_name){
+        if(strcmp(curr_column_name->token,"column_list") == 0){
+            if(curr_column_name->children[2]){
+                //the node splits to more columns, i.e. we havent reached the end of columns 
+                column_names.push_back(curr_column_name->children[2]->children[0]->children[0]->token);
+            }
+            else{
+                // reached the end of columns
+                column_names.push_back(curr_column_name->children[0]->children[0]->children[0]->token);
+            }
+        }
+
+        curr_column_name = curr_column_name->children[0];
+    }
+
+    // get the values from the parse tree
+    std::vector<std::string> values;
+    node* value_list_node = root->children[8];
+    node* curr_value = value_list_node;
+    while (curr_value) {
+        if (strcmp(curr_value->children[0]->token,"expression") == 0) {
+            values.push_back(curr_value->children[0]->children[0]->children[0]->token);
+        }
+        curr_value = curr_value->children[2];
+    }
+
+    std::cout << column_names.size() << std::endl;
+    std::cout << values.size() << std::endl;
+
+    // check if 
+    if (column_names.size() != values.size() || values.size() != target_table->column_array.size() || column_names.size() != target_table->column_array.size()) {
+        return tableErrorMessage("columnmismatch");
+    }
+
+    for(int i = 0; i < values.size(); i++){
+        Column& column = target_table->column_array[i];
+        std::string& value = values[i];
+
+        if(!column.push_back(value)){
+            return tableErrorMessage("invalidvalue");
+        }
+    }
+
+    return successMessage("OK");
+
+}

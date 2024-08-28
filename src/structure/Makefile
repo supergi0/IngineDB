@@ -3,12 +3,13 @@
 STRUCTURE_OBJ := structure.o
 DATABASE_MANAGER_OBJ := database_manager.o
 DATABASE_OBJ := database.o
+COLUMN_OBJ := column.o
 
 .PHONY: all clean
 
 all: $(STRUCTURE_OBJ)
 
-$(STRUCTURE_OBJ): $(DATABASE_MANAGER_OBJ) $(DATABASE_OBJ)
+$(STRUCTURE_OBJ): $(DATABASE_MANAGER_OBJ) $(DATABASE_OBJ) $(COLUMN_OBJ)
 	ld -r -o $@ $^
 
 $(DATABASE_OBJ): database_s.cpp
@@ -17,5 +18,8 @@ $(DATABASE_OBJ): database_s.cpp
 $(DATABASE_MANAGER_OBJ): database_manager_s.cpp
 	g++ -c $< -o $@
 
+$(COLUMN_OBJ): column_s.cpp
+	g++ -c $< -o $@
+
 clean:
-	rm -f $(DATABASE_MANAGER_OBJ) $(STRUCTURE_OBJ) $(DATABASE_OBJ)
+	rm -f $(DATABASE_MANAGER_OBJ) $(STRUCTURE_OBJ) $(DATABASE_OBJ) $(COLUMN_OBJ)

@@ -58,4 +58,6 @@ public:
     const T& operator[](size_t index) const {
         return get_vector<T>().at(index);
     }
+
+    bool push_back(std::string& value);
 };

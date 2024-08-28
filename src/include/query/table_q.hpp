@@ -9,3 +9,5 @@ Response createTable(node* root);
 Response dropTable(node* root);
 
 Response showTable();
+
+Response insertTable(node* root);

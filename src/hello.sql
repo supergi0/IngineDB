@@ -9,3 +9,5 @@ create table helloworld(
     amount float,
     istrue boolean
 );
+
+insert into helloworld (sum,value,name,amount,istrue) values (300,'q',"sagar",500.0,true);

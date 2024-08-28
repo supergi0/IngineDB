@@ -1,5 +1,9 @@
 #include "../include/structure/database_s.hpp"
 
+/*
+depreciated do not use these functions for intensive queries
+*/ 
+
 bool Database::add(std::string table_name,std::vector<Column_s> columns_information){
 
     std::vector<DataType> column_types;

@@ -41,6 +41,9 @@ Response tableErrorMessage(const std::string &type){
     else if(type == "notfound"){
         return Response({1,"Table does not exist"});
     }
+    else if(type == "columnunknown"){
+        return Response({1,"Column already exists"});
+    }
     else{
         return Response({1,"Something went wrong.."});
     }

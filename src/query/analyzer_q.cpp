@@ -8,7 +8,10 @@ Response analyzeQuery(const char* input) {
         // base query statement
         std::string base_query_statement = root->children[0]->token;
 
-        if (base_query_statement == "use_database_statement") {
+        if( base_query_statement == "insert_statement"){
+            response = insertTable(root->children[0]);
+        }
+        else if (base_query_statement == "use_database_statement") {
             response = useDatabase(root->children[0]);
         } 
         else if (base_query_statement == "create_database_statement") {
@@ -32,7 +35,7 @@ Response analyzeQuery(const char* input) {
         else if (base_query_statement == "at_file_statement") {
             executeQueries(root->children[0]);
             response = successMessage("DONE");
-        } 
+        }
         else {
             response = Response({1, "Parsed but no query analyzer implemented"});
         }
