@@ -108,6 +108,8 @@ Response insertTable(node * root){
         return tableErrorMessage("notfound");
     }
 
+    auto start_traverse = std::chrono::high_resolution_clock::now();
+
     // get the columns from the parse tree
     std::vector<std::string> column_names;
     node* curr_column_name = root->children[4];
@@ -116,11 +118,11 @@ Response insertTable(node * root){
         if(strcmp(curr_column_name->token,"column_list") == 0){
             if(curr_column_name->children[2]){
                 //the node splits to more columns, i.e. we havent reached the end of columns 
-                column_names.push_back(curr_column_name->children[2]->children[0]->children[0]->token);
+                column_names.push_back(curr_column_name->children[2]->children[0]->token);
             }
             else{
                 // reached the end of columns
-                column_names.push_back(curr_column_name->children[0]->children[0]->children[0]->token);
+                column_names.push_back(curr_column_name->children[0]->children[0]->token);
             }
         }
 
@@ -130,21 +132,30 @@ Response insertTable(node * root){
     // get the values from the parse tree
     std::vector<std::string> values;
     node* value_list_node = root->children[8];
-    node* curr_value = value_list_node;
-    while (curr_value) {
-        if (strcmp(curr_value->children[0]->token,"expression") == 0) {
-            values.push_back(curr_value->children[0]->children[0]->children[0]->token);
+
+    while (value_list_node) {
+        if (strcmp(value_list_node->token,"value_list") == 0) {
+            if(value_list_node->children[2]){
+                //the node splits to more columns, i.e. we havent reached the end of columns 
+                values.push_back(value_list_node->children[2]->children[0]->children[0]->token);
+            }
+            else{
+                // reached the end of columns
+                values.push_back(value_list_node->children[0]->children[0]->children[0]->token);
+            }
         }
-        curr_value = curr_value->children[2];
+
+        value_list_node = value_list_node->children[0];
     }
 
-    std::cout << column_names.size() << std::endl;
-    std::cout << values.size() << std::endl;
+    auto end_traverse = std::chrono::high_resolution_clock::now();
 
     // check if 
     if (column_names.size() != values.size() || values.size() != target_table->column_array.size() || column_names.size() != target_table->column_array.size()) {
         return tableErrorMessage("columnmismatch");
     }
+
+    auto start_insert = std::chrono::high_resolution_clock::now();
 
     for(int i = 0; i < values.size(); i++){
         Column& column = target_table->column_array[i];
@@ -154,6 +165,16 @@ Response insertTable(node * root){
             return tableErrorMessage("invalidvalue");
         }
     }
+
+    auto end_insert = std::chrono::high_resolution_clock::now();
+
+    auto duration1  = std::chrono::duration_cast<std::chrono::microseconds>(end_insert-start_insert);
+
+    auto duration2  = std::chrono::duration_cast<std::chrono::microseconds>(end_traverse-start_traverse);
+
+    time_insert = time_insert + duration1;
+
+    time_traverse = time_traverse + duration2;
 
     return successMessage("OK");
 

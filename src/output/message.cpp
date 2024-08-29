@@ -44,6 +44,12 @@ Response tableErrorMessage(const std::string &type){
     else if(type == "columnunknown"){
         return Response({1,"Column already exists"});
     }
+    else if(type == "columnmismatch"){
+        return Response({1,"Number of columns and number of arguments do not match"});
+    }
+    else if(type == "invalidvalue"){
+        return Response({1,"Invalid value set for Column"});
+    }
     else{
         return Response({1,"Something went wrong.."});
     }

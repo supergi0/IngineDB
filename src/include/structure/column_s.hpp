@@ -11,7 +11,7 @@ enum class DataType : uint8_t {
 };
 
 class Column {
-private:
+public: 
     DataType type;
     std::variant<std::vector<int>, 
                  std::vector<float>, 
@@ -20,7 +20,6 @@ private:
                  std::vector<std::string>, 
                  std::vector<bool>> data;
 
-public:
     Column(DataType t) : type(t) {
         switch (type) {
             case DataType::INT:
