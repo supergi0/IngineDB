@@ -2,12 +2,6 @@
 
 DatabaseManager dbm;
 
-// auto time_traverse = std::chrono::high_resolution_clock::now() - std::chrono::high_resolution_clock::now();
-// auto time_insert = std::chrono::high_resolution_clock::now() - std::chrono::high_resolution_clock::now();
-
-std::chrono::high_resolution_clock::time_point time_insert;
-std::chrono::high_resolution_clock::time_point time_traverse;
-
 int main(){
 
     std::string command;
@@ -55,11 +49,8 @@ int main(){
             std::cout << output.message;
 
             auto duration  = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+
             std::cout << std::fixed << std::setprecision(6) << ", executed in " << duration.count() / 1000000.0 << " seconds\n\n";
-
-            std::cout << std::fixed << std::setprecision(6) << ", executed in " << time_insert.count() / 1000000.0 << " seconds\n\n";
-
-            std::cout << std::fixed << std::setprecision(6) << ", executed in " << time_traverse.count() / 1000000.0 << " seconds\n\n";
 
             command.clear();
         }

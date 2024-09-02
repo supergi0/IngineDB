@@ -18,6 +18,3 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-
-extern std::chrono::high_resolution_clock::time_point time_insert;
-extern time_traverse;

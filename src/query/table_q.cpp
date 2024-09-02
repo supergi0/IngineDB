@@ -108,8 +108,6 @@ Response insertTable(node * root){
         return tableErrorMessage("notfound");
     }
 
-    auto start_traverse = std::chrono::high_resolution_clock::now();
-
     // get the columns from the parse tree
     std::vector<std::string> column_names;
     node* curr_column_name = root->children[4];
@@ -148,14 +146,10 @@ Response insertTable(node * root){
         value_list_node = value_list_node->children[0];
     }
 
-    auto end_traverse = std::chrono::high_resolution_clock::now();
-
     // check if 
     if (column_names.size() != values.size() || values.size() != target_table->column_array.size() || column_names.size() != target_table->column_array.size()) {
         return tableErrorMessage("columnmismatch");
     }
-
-    auto start_insert = std::chrono::high_resolution_clock::now();
 
     for(int i = 0; i < values.size(); i++){
         Column& column = target_table->column_array[i];
@@ -165,16 +159,6 @@ Response insertTable(node * root){
             return tableErrorMessage("invalidvalue");
         }
     }
-
-    auto end_insert = std::chrono::high_resolution_clock::now();
-
-    auto duration1  = std::chrono::duration_cast<std::chrono::microseconds>(end_insert-start_insert);
-
-    auto duration2  = std::chrono::duration_cast<std::chrono::microseconds>(end_traverse-start_traverse);
-
-    time_insert = time_insert + duration1;
-
-    time_traverse = time_traverse + duration2;
 
     return successMessage("OK");
 
