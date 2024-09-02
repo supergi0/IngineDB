@@ -1,6 +1,5 @@
 .vscode
 a.out
-#hello.sql
 test.cpp
 
 *.o
