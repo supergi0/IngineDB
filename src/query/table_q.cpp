@@ -108,7 +108,7 @@ Response insertTable(node * root){
         return tableErrorMessage("notfound");
     }
 
-    // get the columns from the parse tree
+    // get the columns from the input parse tree
     std::vector<std::string> column_names;
     node* curr_column_name = root->children[4];
 
@@ -127,7 +127,7 @@ Response insertTable(node * root){
         curr_column_name = curr_column_name->children[0];
     }
 
-    // get the values from the parse tree
+    // get the values from the input parse tree
     std::vector<std::string> values;
     node* value_list_node = root->children[8];
 
@@ -146,16 +146,15 @@ Response insertTable(node * root){
         value_list_node = value_list_node->children[0];
     }
 
-    // check if 
-    if (column_names.size() != values.size() || values.size() != target_table->column_array.size() || column_names.size() != target_table->column_array.size()) {
+    // check if sizes of all the columns are same or not
+    if (column_names.size() != values.size() || values.size() != target_table->column_array.size()) {
         return tableErrorMessage("columnmismatch");
     }
 
     for(int i = 0; i < values.size(); i++){
         Column& column = target_table->column_array[i];
-        std::string& value = values[i];
 
-        if(!column.push_back(value)){
+        if(!column.push_back(values[i])){
             return tableErrorMessage("invalidvalue");
         }
     }
