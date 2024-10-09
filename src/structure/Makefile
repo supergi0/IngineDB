@@ -1,7 +1,6 @@
 # structure/Makefile
 
 STRUCTURE_OBJ := structure.o
-DATABASE_MANAGER_OBJ := database_manager.o
 DATABASE_OBJ := database.o
 COLUMN_OBJ := column.o
 
@@ -9,17 +8,14 @@ COLUMN_OBJ := column.o
 
 all: $(STRUCTURE_OBJ)
 
-$(STRUCTURE_OBJ): $(DATABASE_MANAGER_OBJ) $(DATABASE_OBJ) $(COLUMN_OBJ)
+$(STRUCTURE_OBJ): $(DATABASE_OBJ) $(COLUMN_OBJ)
 	ld -r -o $@ $^
 
 $(DATABASE_OBJ): database_s.cpp
-	g++ -c $< -o $@
-
-$(DATABASE_MANAGER_OBJ): database_manager_s.cpp
 	g++ -c $< -o $@
 
 $(COLUMN_OBJ): column_s.cpp
 	g++ -c $< -o $@
 
 clean:
-	rm -f $(DATABASE_MANAGER_OBJ) $(STRUCTURE_OBJ) $(DATABASE_OBJ) $(COLUMN_OBJ)
+	rm -f $(STRUCTURE_OBJ) $(DATABASE_OBJ) $(COLUMN_OBJ)

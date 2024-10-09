@@ -2,12 +2,16 @@
 
 Response createTable(node* root){
 
-    if(!dbm.isset()) return databaseErrorMessage("notset");
+    if(!dbm.current_database){
+        return databaseErrorMessage("Database not selected");
+    }
 
     std::string name = root->children[2]->children[0]->token;
 
-    if(dbm.current_database->exists(name)){
-        return tableErrorMessage("duplicate");
+    for(auto& tb: dbm.current_database->table_array){
+        if(tb.name == name){
+            return tableErrorMessage("Table already exists");
+        }
     }
 
     // this corresponds to column definitions node from the parser
@@ -48,12 +52,14 @@ Response createTable(node* root){
     return successMessage("OK");
     }
 
-    return tableErrorMessage("columnunknown");
+    return tableErrorMessage("Unknown Column type");
 };
 
 Response dropTable(node* root){
 
-    if(!dbm.isset()) return databaseErrorMessage("notset");
+    if(!dbm.current_database){
+        return databaseErrorMessage("Database not selected");
+    }
 
     if(root->children[2]->children[0]->token){
     
@@ -62,23 +68,26 @@ Response dropTable(node* root){
 
     std::string name = root->children[2]->children[0]->token;
 
-    if(dbm.current_database->exists(name)){
-        dbm.current_database->remove(name);
-        return successMessage("OK");
+    for(auto it = dbm.current_database->table_array.begin(); it != dbm.current_database->table_array.end(); it++){
+        if(it->name == name){
+            dbm.current_database->table_array.erase(it);
+            return successMessage("OK");
+        }
     }
-    return tableErrorMessage("notfound");
+
+    return tableErrorMessage("Table not found");
 };
 
 Response showTable(){
 
-    if(!dbm.isset()) return databaseErrorMessage("notset");
+    if(!dbm.current_database){
+        return databaseErrorMessage("Database not selected");
+    }
 
     std::vector<std::vector<std::string>> simple_table;
 
-    std::vector<std::string> tables = dbm.current_database->get_tables();
-
-    for(const auto& tb : tables){
-        simple_table.push_back({tb});
+    for(auto& tb: dbm.current_database->table_array){
+        simple_table.push_back({tb.name});
     }
 
     simpleTablePrint({"show tables"},simple_table);
@@ -88,8 +97,9 @@ Response showTable(){
 
 Response insertTable(node * root){
 
-    // check if the current database is set or not
-    if(!dbm.isset()) return databaseErrorMessage("notset");
+    if(!dbm.current_database){
+        return databaseErrorMessage("Database not selected");
+    }
 
     // insert_table_statement -> identifier -> name -> string
     std::string name = root->children[2]->children[0]->token;
@@ -105,7 +115,7 @@ Response insertTable(node * root){
 
     // if table does not exist then exit
     if(!target_table){
-        return tableErrorMessage("notfound");
+        return tableErrorMessage("Table not found");
     }
 
     // get the columns from the input parse tree
@@ -148,14 +158,14 @@ Response insertTable(node * root){
 
     // check if sizes of all the columns are same or not
     if (column_names.size() != values.size() || values.size() != target_table->column_array.size()) {
-        return tableErrorMessage("columnmismatch");
+        return tableErrorMessage("Column value size mismatch");
     }
 
     for(int i = 0; i < values.size(); i++){
         Column& column = target_table->column_array[i];
 
         if(!column.push_back(values[i])){
-            return tableErrorMessage("invalidvalue");
+            return tableErrorMessage("Column value type mismatch");
         }
     }
 
