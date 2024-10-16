@@ -30,7 +30,7 @@ Response databaseErrorMessage(const std::string &type){
         return Response({1,"Select a database before executing queries"});
     }
     else{
-        return Response({1,"Something went wrong.."});
+        return Response({1,type});
     }
 }
 
@@ -51,6 +51,6 @@ Response tableErrorMessage(const std::string &type){
         return Response({1,"Invalid value set for Column"});
     }
     else{
-        return Response({1,"Something went wrong.."});
+        return Response({1,type});
     }
 }

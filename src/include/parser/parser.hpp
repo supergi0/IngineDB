@@ -3,7 +3,7 @@
 #include "../basic.hpp"
 
 typedef struct node {
-    struct node* children[20];
+    struct node* children[MAX_PARSE_TREE_CHILDREN];
     char* token;
 } node;
 

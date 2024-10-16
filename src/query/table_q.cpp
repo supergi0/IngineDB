@@ -101,8 +101,8 @@ Response insertTable(node * root){
         return databaseErrorMessage("Database not selected");
     }
 
-    // insert_table_statement -> identifier -> name -> string
-    std::string name = root->children[2]->children[0]->token;
+    // insert_table_statement -> string
+    std::string name = root->children[0]->token;
 
     // get the current table object
     Table* target_table = nullptr;
@@ -118,9 +118,9 @@ Response insertTable(node * root){
         return tableErrorMessage("Table not found");
     }
 
-    // get the columns from the input parse tree
+    // get the columns list from the input parse tree
     std::vector<std::string> column_names;
-    node* curr_column_name = root->children[4];
+    node* curr_column_name = root->children[1];
 
     while(curr_column_name){
         if(strcmp(curr_column_name->token,"column_list") == 0){
@@ -139,7 +139,7 @@ Response insertTable(node * root){
 
     // get the values from the input parse tree
     std::vector<std::string> values;
-    node* value_list_node = root->children[8];
+    node* value_list_node = root->children[2];
 
     while (value_list_node) {
         if (strcmp(value_list_node->token,"value_list") == 0) {

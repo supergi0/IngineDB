@@ -1,6 +1,7 @@
 .vscode
 a.out
-test.cpp
+test_insert.cpp
+test_leak.cpp
 hello.sql
 
 *.o

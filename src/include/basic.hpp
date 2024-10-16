@@ -18,3 +18,6 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
+
+#define MAX_PARSE_TREE_CHILDREN 11
+#define MAX_PARSER_WORD_LENGTH 15

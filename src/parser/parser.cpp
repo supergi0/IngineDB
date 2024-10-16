@@ -24,7 +24,7 @@ void recursiveprinttree(node* head, int n, int depth, int child){
 
 	fprintf(output,"{");
 	fprintf(output,"%s", head->token);
-	for(int i=0; i<20; i++){
+	for(int i=0; i<MAX_PARSE_TREE_CHILDREN; i++){
 		recursiveprinttree(head->children[i], n+1, depth+1, i);
 	}
 	fprintf(output,"}");
@@ -41,16 +41,12 @@ void deleteNode(node* head) {
     }
 
     // Recursively delete children
-    for (int i = 0; i < 20; i++) {
-        if (head->children[i] != NULL) {
-            deleteNode(head->children[i]);
-        }
+    for (int i = 0; i < MAX_PARSE_TREE_CHILDREN; i++) {
+        deleteNode(head->children[i]);
     }
 
     // Free the token
-    if (head->token != NULL) {
-        free(head->token);
-    }
+    free(head->token);
 
     // Delete the node itself
     delete head;

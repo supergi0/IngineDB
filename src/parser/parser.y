@@ -454,46 +454,54 @@ expression
 insert_statement
     : INSERT INTO IDENTIFIER LPAREN column_list RPAREN VALUES LPAREN value_list RPAREN SEMICOLON
     {
+        /*
+        *This function has been reduced in size for reducing node creation
+        */
+
         $$.nd = mknode("insert_statement");
 
-        $1.nd = mknode("INSERT");
-        $1.nd->children[0] = mknode($1.name);
+        $$.nd->children[0] = mknode($3.name); // This contains the table name
+        $$.nd->children[1] = $5.nd; // This contains the column list
+        $$.nd->children[2] = $9.nd; // This contains the value list
 
-        $2.nd = mknode("INTO");
-        $2.nd->children[0] = mknode($2.name);
+        // $1.nd = mknode("INSERT");
+        // $1.nd->children[0] = mknode($1.name);
 
-        $3.nd = mknode("IDENTIFIER");
-        $3.nd->children[0] = mknode($3.name);
+        // $2.nd = mknode("INTO");
+        // $2.nd->children[0] = mknode($2.name);
 
-        $4.nd = mknode("LPAREN");
-        $4.nd->children[0] = mknode($4.name);
+        // $3.nd = mknode("IDENTIFIER");
+        // $3.nd->children[0] = mknode($3.name);
 
-        $6.nd = mknode("RPAREN");
-        $6.nd->children[0] = mknode($6.name);
+        // $4.nd = mknode("LPAREN");
+        // $4.nd->children[0] = mknode($4.name);
 
-        $7.nd = mknode("VALUES");
-        $7.nd->children[0] = mknode($7.name);
+        // $6.nd = mknode("RPAREN");
+        // $6.nd->children[0] = mknode($6.name);
 
-        $8.nd = mknode("LPAREN");
-        $8.nd->children[0] = mknode($8.name);
+        // $7.nd = mknode("VALUES");
+        // $7.nd->children[0] = mknode($7.name);
 
-        $10.nd = mknode("RPAREN");
-        $10.nd->children[0] = mknode($10.name);
+        // $8.nd = mknode("LPAREN");
+        // $8.nd->children[0] = mknode($8.name);
 
-        $11.nd = mknode("SEMICOLON");
-        $11.nd->children[0] = mknode($11.name);
+        // $10.nd = mknode("RPAREN");
+        // $10.nd->children[0] = mknode($10.name);
 
-        $$.nd->children[0] = $1.nd;
-        $$.nd->children[1] = $2.nd;
-        $$.nd->children[2] = $3.nd;
-        $$.nd->children[3] = $4.nd;
-        $$.nd->children[4] = $5.nd;
-        $$.nd->children[5] = $6.nd;
-        $$.nd->children[6] = $7.nd;
-        $$.nd->children[7] = $8.nd;
-        $$.nd->children[8] = $9.nd;
-        $$.nd->children[9] = $10.nd;
-        $$.nd->children[10] = $11.nd;
+        // $11.nd = mknode("SEMICOLON");
+        // $11.nd->children[0] = mknode($11.name);
+
+        // $$.nd->children[0] = $1.nd;
+        // $$.nd->children[1] = $2.nd;
+        // $$.nd->children[2] = $3.nd;
+        // $$.nd->children[3] = $4.nd;
+        // $$.nd->children[4] = $5.nd;
+        // $$.nd->children[5] = $6.nd;
+        // $$.nd->children[6] = $7.nd;
+        // $$.nd->children[7] = $8.nd;
+        // $$.nd->children[8] = $9.nd;
+        // $$.nd->children[9] = $10.nd;
+        // $$.nd->children[10] = $11.nd;
     }
     ;
 
