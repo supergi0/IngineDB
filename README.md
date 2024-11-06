@@ -1,4 +1,4 @@
-# IngeniumDB
+# IngineDB
 
 ### Requirements
 
@@ -6,14 +6,14 @@
 - flex
 - bison
 
-### Starting IngeniumDB CLI
+### Starting IngineDB CLI
 
 execute following from `src/` directory
 ```bash
 make all
 ```
 
-before pushing to repo make sure to clean the folders by executing the following command in `src/` directory
+Clean the folders by executing the following command in `src/` directory
 ```bash
 make clean
 ```
@@ -25,21 +25,35 @@ The parsing of IngDB is case insensitive for all tokens, except for string liter
 ### Database Statements
 
 ```sql
+-- create a new database
 CREATE DATABASE MUSIC;
 
+-- drop the database
 DROP DATABASE MUSIC;
 
+-- switch to another database
 USE DATABASE MUSIC;
 
+-- list out all databases
 SHOW DATABASES;
 ```
 
 ### Table Statements
 
 ```sql
+-- create a new table
+CREATE TABLE (id INT, name VARCHAR, age INT, address VARCHAR);
+
+
+-- insert a new record into a table
+INSERT INTO MUSIC (id, name, age, address) VALUES (10, "Doc", 25, "ABC Street");
+
+-- drop the table
 DROP TABLE AUTHORS;
 
+-- list out all tables
 SHOW TABLES;
+
 
 ```
 
@@ -66,9 +80,3 @@ SHOW TABLES;
 - `structure` : Encapsulates methods directly accessing objects of structure classes such as database, table.
 
 - `include` : Header files defining interfaces for import usage.
-
-### Makefile
-
-- Make sure to not change the Makefile `src\Makefile`, rather on adding new cpp files in any of the folder make sure to link it while creating the main object file for that folder.
-
-- This can be done in the Makefiles present `src\<folder>\Makefile`.
