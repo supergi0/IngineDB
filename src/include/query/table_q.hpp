@@ -4,10 +4,10 @@
 #include "../structure/database_manager_s.hpp"
 #include "../output/output.hpp"
 
-Response createTable(node* root);
+Response createTable(node *root);
 
-Response dropTable(node* root);
+Response dropTable(node *root);
 
 Response showTable();
 
-Response insertTable(node* root);
+Response insertTable(node *root);

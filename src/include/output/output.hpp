@@ -2,11 +2,11 @@
 
 #include "../basic.hpp"
 
-
 // Response messages defined under here --------
 
-typedef struct Response{
-    int type; // 0 -> successful | >0 -> error 
+typedef struct Response
+{
+    int type;            // 0 -> successful | >0 -> error
     std::string message; // Specific message to be sent
 } Response;
 
@@ -24,4 +24,4 @@ void printHelpMessage();
 
 void lineprint(std::vector<std::string> input);
 
-void simpleTablePrint(const std::vector<std::string>& column_names, const std::vector<std::vector<std::string>>& cells);
+void simpleTablePrint(const std::vector<std::string> &column_names, const std::vector<std::vector<std::string>> &cells);

@@ -2,13 +2,16 @@
 
 extern bool error_occured;
 
-node* mknode(const char* token){
+node *mknode(const char *token)
+{
     node *newnode = new node();
-    if (newnode == NULL) {
+    if (newnode == NULL)
+    {
         return NULL;
     }
     newnode->token = strdup(token);
-    if (newnode->token == NULL) {
+    if (newnode->token == NULL)
+    {
         delete newnode;
         return NULL;
     }
@@ -16,32 +19,39 @@ node* mknode(const char* token){
 }
 
 // Functions to check the parse tree
-FILE* output;
-void recursiveprinttree(node* head, int n, int depth, int child){
-	if(head==NULL){
-		return;
-	}
+FILE *output;
+void recursiveprinttree(node *head, int n, int depth, int child)
+{
+    if (head == NULL)
+    {
+        return;
+    }
 
-	fprintf(output,"{");
-	fprintf(output,"%s", head->token);
-	for(int i=0; i<MAX_PARSE_TREE_CHILDREN; i++){
-		recursiveprinttree(head->children[i], n+1, depth+1, i);
-	}
-	fprintf(output,"}");
+    fprintf(output, "{");
+    fprintf(output, "%s", head->token);
+    for (int i = 0; i < MAX_PARSE_TREE_CHILDREN; i++)
+    {
+        recursiveprinttree(head->children[i], n + 1, depth + 1, i);
+    }
+    fprintf(output, "}");
 }
-void printTree(node* head){
-    output = fopen("output.txt","w+");
-    recursiveprinttree(head,1,0,0);
+void printTree(node *head)
+{
+    output = fopen("output.txt", "w+");
+    recursiveprinttree(head, 1, 0, 0);
     fclose(output);
 }
 
-void deleteNode(node* head) {
-    if (head == NULL) {
+void deleteNode(node *head)
+{
+    if (head == NULL)
+    {
         return;
     }
 
     // Recursively delete children
-    for (int i = 0; i < MAX_PARSE_TREE_CHILDREN; i++) {
+    for (int i = 0; i < MAX_PARSE_TREE_CHILDREN; i++)
+    {
         deleteNode(head->children[i]);
     }
 

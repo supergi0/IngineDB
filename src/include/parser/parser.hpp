@@ -2,13 +2,14 @@
 
 #include "../basic.hpp"
 
-typedef struct node {
-    struct node* children[MAX_PARSE_TREE_CHILDREN];
-    char* token;
+typedef struct node
+{
+    struct node *children[MAX_PARSE_TREE_CHILDREN];
+    char *token;
 } node;
 
-node* mknode(const char* token);
+node *mknode(const char *token);
 
-node* getParseTree(const char* input);
+node *getParseTree(const char *input);
 
-void deleteNode(node* head);
+void deleteNode(node *head);

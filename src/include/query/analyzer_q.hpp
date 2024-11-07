@@ -4,6 +4,6 @@
 #include "./table_q.hpp"
 #include "../parser/parser.hpp"
 
-Response analyzeQuery(const char* input);
+Response analyzeQuery(const char *input);
 
-void executeQueries(node* root);
+void executeQueries(node *root);

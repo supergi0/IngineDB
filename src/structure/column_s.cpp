@@ -1,8 +1,9 @@
 #include "../include/structure/column_s.hpp"
 
-bool Column::push_back(std::string& value) {
-
-    switch (type) {
+bool Column::push_back(std::string &value)
+{
+    switch (type)
+    {
     case DataType::INT:
         get_vector<int>().push_back(std::stoi(value));
         break;
@@ -13,7 +14,8 @@ bool Column::push_back(std::string& value) {
         get_vector<double>().push_back(std::stod(value));
         break;
     case DataType::CHAR:
-        if (value.length() != 3) return false;
+        if (value.length() != 3)
+            return false;
         get_vector<char>().push_back(value[1]);
         break;
     case DataType::VARCHAR:

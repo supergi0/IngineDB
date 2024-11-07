@@ -2,6 +2,7 @@
 a.out
 test_insert.cpp
 test_leak.cpp
+hello.sql
 
 *.o
 

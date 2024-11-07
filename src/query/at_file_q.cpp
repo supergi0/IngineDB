@@ -1,17 +1,19 @@
 #include "../include/query/analyzer_q.hpp"
 
-
-void executeQueries(node* root) {
+void executeQueries(node *root)
+{
 
     std::string filename = root->children[0]->children[0]->token;
-    
+
     // Remove the '@' symbol
-    if (filename[0] == '@') {
+    if (filename[0] == '@')
+    {
         filename = filename.substr(1);
     }
 
     std::ifstream file(filename, std::ifstream::binary);
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         std::cerr << "Failed to open file: " << filename << "\n";
         return;
     }
@@ -20,24 +22,31 @@ void executeQueries(node* root) {
     char ch;
     bool in_quotes = false;
 
-        while (file.get(ch)) {
+    while (file.get(ch))
+    {
 
-            if (ch == '"') {
-                in_quotes = !in_quotes;
-            }
-            if (ch == ';' && !in_quotes) {
-                if (!query.empty()) {
-                    query += ch;
-                    Response response = analyzeQuery(query.c_str());
-
-                    if(response.type == 1){
-                        std::cout << response.message << "\n";
-                    }
-                }
-                query.clear();
-            } else {
-                query += ch;
-            }
+        if (ch == '"')
+        {
+            in_quotes = !in_quotes;
         }
+        if (ch == ';' && !in_quotes)
+        {
+            if (!query.empty())
+            {
+                query += ch;
+                Response response = analyzeQuery(query.c_str());
+
+                if (response.type == 1)
+                {
+                    std::cout << response.message << "\n";
+                }
+            }
+            query.clear();
+        }
+        else
+        {
+            query += ch;
+        }
+    }
     file.close();
 }

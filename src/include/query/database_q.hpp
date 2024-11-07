@@ -4,10 +4,10 @@
 #include "../structure/database_manager_s.hpp"
 #include "../output/output.hpp"
 
-Response createDatabase(node* root);
+Response createDatabase(node *root);
 
-Response dropDatabase(node* root);
+Response dropDatabase(node *root);
 
 Response showDatabase();
 
-Response useDatabase(node* root);
+Response useDatabase(node *root);
